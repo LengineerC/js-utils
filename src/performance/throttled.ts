@@ -1,7 +1,7 @@
 /**
  * 节流包装器
  * @param fn 需要节流的函数
- * @param delay 延迟时间（ms）
+ * @param delay 延迟时间（ms），默认300ms
  */
 export function throttled<T extends (...args: any[]) => any>(
   fn: T,
@@ -10,7 +10,7 @@ export function throttled<T extends (...args: any[]) => any>(
 
 /**
  * 节流包装器（@装饰器调用）
- * @param delay 延迟时间（ms）
+ * @param delay 延迟时间（ms），默认300ms
  */
 export function throttled(
   delay?: number
