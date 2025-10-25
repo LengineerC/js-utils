@@ -17,7 +17,7 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     "src/**/*.{js,ts}",
-    "!src/**/*.test.{js,ts}" // 排除测试文件
+    "!src/**/*.test.{js,ts}"
   ],
   globals: {
     'ts-jest': {
