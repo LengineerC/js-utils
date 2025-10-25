@@ -2,7 +2,7 @@ import {
   genRandomInt,
   genRandomFloat,
   genRandomBoolean,
-} from '../../dist';
+} from '../../src';
 
 describe('genRandomInt', () => {
   beforeEach(() => {

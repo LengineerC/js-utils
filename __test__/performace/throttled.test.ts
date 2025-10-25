@@ -1,4 +1,4 @@
-const { throttled } = require('../../dist/index');
+const { throttled } = require('../../src');
 
 describe('throttled 节流函数', () => {
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import { curry } from "../../dist";
+import { curry } from "../../src";
 
 describe("柯里化", () => {
   test('正确执行函数', () => {

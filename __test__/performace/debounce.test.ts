@@ -1,4 +1,4 @@
-const { debounce } = require('../../dist/index');
+const { debounce } = require('../../src');
 // import { debounce } from '../../dist';
 
 describe('debounce 防抖函数', () => {

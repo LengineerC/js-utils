@@ -1,4 +1,4 @@
-import { compareVersion } from '../../dist';
+import { compareVersion } from '../../src';
 
 describe('compareVersion', () => {
   describe('基础比较功能', () => {

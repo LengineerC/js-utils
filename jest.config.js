@@ -14,6 +14,11 @@ module.exports = {
   ],
   verbose: true,
   testTimeout: 5000,
+  collectCoverage: true,
+  collectCoverageFrom: [
+    "src/**/*.{js,ts}",
+    "!src/**/*.test.{js,ts}" // 排除测试文件
+  ],
   globals: {
     'ts-jest': {
       tsconfig: {

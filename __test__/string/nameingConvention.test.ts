@@ -1,4 +1,4 @@
-const { camelToSnake, snakeToCamel } = require('../../dist');
+import { snakeToCamel, camelToSnake } from '../../src';
 
 describe("命名转换", () => {
   test('camelToSnake 应该正确转换', () => {
