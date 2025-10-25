@@ -1,12 +1,12 @@
-const { curry } = require('../dist/index');
+import { curry } from "../dist";
 
 describe("柯里化", () => {
   test('正确执行函数', () => {
-    function addFnnc(a, b, c) {
+    function addFnnc(a: number, b: number, c: number) {
       return a + b + c;
     }
 
-    const addArrowFunc = (a, b, c) => {
+    const addArrowFunc = (a: number, b: number, c: number) => {
       return a + b + c;
     };
 
@@ -27,7 +27,7 @@ describe("柯里化", () => {
   test('对象方法 this 上下文', () => {
     const calculator = {
       base: 10,
-      add(a, b, c) {
+      add(a: number, b: number, c: number) {
         return this.base + a + b + c;
       }
     };

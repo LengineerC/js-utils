@@ -1,4 +1,5 @@
-const { debounce, throttled } = require('../dist/index');
+const { debounce, throttled } = require('../dist');
+// import { debounce, throttled } from "../dist";
 
 describe('debounce 防抖函数', () => {
   beforeEach(() => {
@@ -22,6 +23,28 @@ describe('debounce 防抖函数', () => {
 
     jest.advanceTimersByTime(50);
     expect(mockFn).toHaveBeenCalledWith('test');
+    expect(mockFn).toHaveBeenCalledTimes(1);
+  });
+
+  test('应该延迟执行函数(装饰器)', () => {
+    const mockFn = jest.fn();
+
+    class Test {
+      @debounce(100)
+      decoratedMethod() {
+        mockFn();
+      }
+    }
+
+    const instance = new Test();
+    instance.decoratedMethod();
+    instance.decoratedMethod();
+    instance.decoratedMethod();
+
+    expect(mockFn).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(100);
+
     expect(mockFn).toHaveBeenCalledTimes(1);
   });
 
@@ -61,7 +84,7 @@ describe('debounce 防抖函数', () => {
     const context = { value: 'test' };
     let receivedContext = null;
 
-    function testFn() {
+    function testFn(this: any) {
       receivedContext = this;
     }
 
@@ -156,11 +179,37 @@ describe('throttled 节流函数', () => {
     expect(mockFn).toHaveBeenCalledTimes(1);
   });
 
+  test('应该阻止重复执行函数(装饰器)', () => {
+    const mockFn = jest.fn();
+
+    class Test {
+      @throttled(100)
+      throttledMethod() {
+        mockFn();
+      }
+    }
+
+    const instance = new Test();
+
+    instance.throttledMethod();
+    instance.throttledMethod();
+    instance.throttledMethod();
+
+    expect(mockFn).toHaveBeenCalledTimes(1);
+
+    jest.advanceTimersByTime(50);
+    expect(mockFn).toHaveBeenCalledTimes(1);
+
+    jest.advanceTimersByTime(50);
+
+    expect(mockFn).toHaveBeenCalledTimes(2);
+  });
+
   test('应该正确绑定 this 上下文', () => {
     const context = { value: 'test' };
     let receivedContext = null;
 
-    function testFn() {
+    function testFn(this: any) {
       receivedContext = this;
     }
 

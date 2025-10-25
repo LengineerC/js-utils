@@ -42,27 +42,31 @@ export function throttled<T extends (...args: any[]) => any>(
 
 function createThrottledFunction<T extends (...args: any[]) => any>(
   fn: T,
-  delay: number
+  delay = 300
 ): (...args: Parameters<T>) => void {
-  let timer: ReturnType<typeof setTimeout> | null = null;
-  let lastArgs: Parameters<T> | null = null;
-  let lastThis: any;
+  let lastTime = 0;
+  let timer: any = null;
 
   return function (this: any, ...args: Parameters<T>) {
-    lastArgs = args;
-    lastThis = this;
+    const now = Date.now();
+    const remaining = delay - (now - lastTime);
 
-    if (!timer) {
-      // leading
+    const later = () => {
+      lastTime = Date.now();
+      timer = null;
       fn.apply(this, args);
-      timer = setTimeout(() => {
-        // trailing
-        if (lastArgs) {
-          fn.apply(lastThis, lastArgs);
-          lastArgs = null;
-        }
+    };
+
+    if (remaining <= 0 || remaining > delay) {
+      if (timer) {
+        clearTimeout(timer);
         timer = null;
-      }, delay);
+      }
+      lastTime = now;
+      fn.apply(this, args);
+    } else {
+      clearTimeout(timer);
+      timer = setTimeout(later, remaining);
     }
-  }
+  };
 }

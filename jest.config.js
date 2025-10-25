@@ -1,7 +1,16 @@
+const { createDefaultPreset } = require("ts-jest");
+
+const tsJestTransformCfg = createDefaultPreset().transform;
+
+/** @type {import("jest").Config} **/
 module.exports = {
-  testEnviroment: 'node',
+  testEnvironment: "node",
+  transform: {
+    ...tsJestTransformCfg,
+  },
   testMatch: [
     '**/__test__/**/*.test.js',
+    '**/__test__/**/*.test.ts',
   ],
   verbose: true,
   testTimeout: 5000,
@@ -10,7 +19,8 @@ module.exports = {
       tsconfig: {
         experimentalDecorators: true,
         emitDecoratorMetadata: true
-      }
+      },
+      useESM: true,
     }
   }
 };
