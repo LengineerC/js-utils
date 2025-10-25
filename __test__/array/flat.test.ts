@@ -1,4 +1,4 @@
-import { flat } from '../dist';
+import { flat } from '../../dist';
 
 describe('flat function', () => {
   describe('默认全部展开', () => {
