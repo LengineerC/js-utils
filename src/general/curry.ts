@@ -23,6 +23,11 @@ type Curried<F> = F extends (...args: infer P) => infer R
   ? Curry<P, R>
   : never;
 
+/**
+ * 柯里化函数，将多参数函数转换为可部分应用的函数。
+ * @param fn 需要柯里化的函数
+ * @returns 返回柯里化后的函数
+ */
 export function curry<F extends (...args: any[]) => any>(fn: F): Curried<F> {
   function curried(this: any, ...args: any[]): any {
     if (args.length >= fn.length) {
@@ -37,53 +42,3 @@ export function curry<F extends (...args: any[]) => any>(fn: F): Curried<F> {
   }
   return curried as Curried<F>;
 }
-
-// function createCurryFn<F extends (this: any, ...args: any[]) => any>(fn: F): Curried<F> {
-//   function curried(this: any, ...args: any[]): any {
-//     if (args.length >= fn.length) {
-//       return fn.apply(this, args);
-//     } else {
-//       const currentThis = this;
-
-//       return function (this: any, ...args2: any[]) {
-//         return curried.apply(currentThis, args.concat(args2));
-//       };
-//     }
-//   }
-//   return curried as Curried<F>;
-// }
-
-// export function curry<F extends (this: any, ...args: any[]) => any>(fn: F): Curried<F>;
-// export function curry<F extends (this: any, ...args: any[]) => any>(
-//   target: any,
-//   propertyKey?: string,
-//   descriptor?: TypedPropertyDescriptor<F>
-// ): any;
-// export function curry(...args: any[]): any {
-//   if (typeof args[0] === 'function' && args.length === 1) {
-//     return createCurryFn(args[0]);
-//   }
-
-//   if (
-//     args.length === 0 ||
-//     (typeof args[0] === 'object' &&
-//       typeof args[1] === 'string' &&
-//       typeof args[2] === 'object')
-//   ) {
-//     const [target, propertyKey, descriptor] = args;
-//     const fn = descriptor.value;
-    
-//     if (typeof fn !== 'function') {
-//       throw new Error('@curry can only be applied to methods');
-//     }
-
-//     const curriedFn = createCurryFn(fn);
-    
-//     return {
-//       ...descriptor,
-//       get() {
-//         return (...curryArgs: any[]) => curriedFn.apply(this, curryArgs);
-//       }
-//     };
-//   }
-// }
