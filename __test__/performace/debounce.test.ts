@@ -1,5 +1,4 @@
-const { debounce } = require('../../src');
-// import { debounce } from '../../dist';
+const { debounce, debounced } = require('../../src');
 
 describe('debounce 防抖函数', () => {
   beforeEach(() => {
@@ -30,7 +29,7 @@ describe('debounce 防抖函数', () => {
     const mockFn = jest.fn();
 
     class Test {
-      @debounce(100)
+      @debounced(100)
       decoratedMethod() {
         mockFn();
       }
@@ -46,6 +45,15 @@ describe('debounce 防抖函数', () => {
     jest.advanceTimersByTime(100);
 
     expect(mockFn).toHaveBeenCalledTimes(1);
+  });
+
+  test('装饰器 @debounced 应该正确处理非函数调用', () => {
+    expect(() => {
+      class Test {
+        @debounced()
+        value = 42;
+      };
+    }).toThrow('debounced decorator can only be applied to methods');
   });
 
   test('多次快速调用应该只执行最后一次', () => {

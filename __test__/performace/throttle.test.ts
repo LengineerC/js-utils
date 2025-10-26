@@ -1,6 +1,6 @@
-const { throttled } = require('../../src');
+const { throttle, throttled } = require('../../src');
 
-describe('throttled 节流函数', () => {
+describe('throttle 节流函数', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
@@ -12,7 +12,7 @@ describe('throttled 节流函数', () => {
 
   test('应该立即执行第一次调用', () => {
     const mockFn = jest.fn();
-    const throttledFn = throttled(mockFn, 100);
+    const throttledFn = throttle(mockFn, 100);
 
     throttledFn('first');
 
@@ -22,7 +22,7 @@ describe('throttled 节流函数', () => {
 
   test('在延迟时间内应该阻止重复执行', () => {
     const mockFn = jest.fn();
-    const throttledFn = throttled(mockFn, 100);
+    const throttledFn = throttle(mockFn, 100);
 
     throttledFn('first');
     expect(mockFn).toHaveBeenCalledTimes(1);
@@ -30,32 +30,6 @@ describe('throttled 节流函数', () => {
     throttledFn('second');
     throttledFn('third');
     expect(mockFn).toHaveBeenCalledTimes(1);
-  });
-
-  test('应该阻止重复执行函数(装饰器)', () => {
-    const mockFn = jest.fn();
-
-    class Test {
-      @throttled(100)
-      throttledMethod() {
-        mockFn();
-      }
-    }
-
-    const instance = new Test();
-
-    instance.throttledMethod();
-    instance.throttledMethod();
-    instance.throttledMethod();
-
-    expect(mockFn).toHaveBeenCalledTimes(1);
-
-    jest.advanceTimersByTime(50);
-    expect(mockFn).toHaveBeenCalledTimes(1);
-
-    jest.advanceTimersByTime(50);
-
-    expect(mockFn).toHaveBeenCalledTimes(2);
   });
 
   test('应该正确绑定 this 上下文', () => {
@@ -66,7 +40,7 @@ describe('throttled 节流函数', () => {
       receivedContext = this;
     }
 
-    const throttledFn = throttled(testFn, 100);
+    const throttledFn = throttle(testFn, 100);
     throttledFn.call(context);
 
     expect(receivedContext).toBe(context);
@@ -74,7 +48,7 @@ describe('throttled 节流函数', () => {
 
   test('应该正确传递所有参数', () => {
     const mockFn = jest.fn();
-    const throttledFn = throttled(mockFn, 100);
+    const throttledFn = throttle(mockFn, 100);
 
     throttledFn(1, 'two', { three: 3 });
 
@@ -83,7 +57,7 @@ describe('throttled 节流函数', () => {
 
   test('最后一次调用应该在延迟结束后执行', () => {
     const mockFn = jest.fn();
-    const throttledFn = throttled(mockFn, 100);
+    const throttledFn = throttle(mockFn, 100);
 
     throttledFn('first');
     expect(mockFn).toHaveBeenCalledTimes(1);
@@ -100,7 +74,7 @@ describe('throttled 节流函数', () => {
 
   test('应该处理快速连续调用场景', () => {
     const mockFn = jest.fn();
-    const throttledFn = throttled(mockFn, 100);
+    const throttledFn = throttle(mockFn, 100);
 
     throttledFn('call1');
     jest.advanceTimersByTime(10);
@@ -116,5 +90,72 @@ describe('throttled 节流函数', () => {
     jest.advanceTimersByTime(70);
     expect(mockFn).toHaveBeenCalledWith('call4');
     expect(mockFn).toHaveBeenCalledTimes(2);
+  });
+});
+
+describe('throttled 节流装饰器', () => {
+  beforeEach(() => {
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
+  test('装饰器 @throttled 应该正确节流方法', () => {
+    const mockFn = jest.fn();
+
+    class Test {
+      @throttled(100)
+      method() {
+        mockFn();
+      }
+    }
+
+    const instance = new Test();
+
+    instance.method();
+    expect(mockFn).toHaveBeenCalledTimes(1);
+
+    instance.method();
+    instance.method();
+    expect(mockFn).toHaveBeenCalledTimes(1);
+
+    jest.advanceTimersByTime(100);
+    expect(mockFn).toHaveBeenCalledTimes(2);
+
+    instance.method();
+    instance.method();
+    jest.advanceTimersByTime(50);
+    instance.method();
+    jest.advanceTimersByTime(50);
+    expect(mockFn).toHaveBeenCalledTimes(3);
+  });
+
+  test('装饰器 @throttled 应该正确绑定 this', () => {
+    let receivedThis: any = null;
+
+    class Test {
+      value = 42;
+      @throttled(100)
+      method() {
+        receivedThis = this;
+      }
+    }
+
+    const instance = new Test();
+    instance.method();
+
+    expect(receivedThis).toBe(instance);
+  });
+
+  test('装饰器 @throttled 应该正确处理非函数调用', () => {
+    expect(() => {
+      class Test {
+        @throttled()
+        value = 42;
+      };
+    }).toThrow('throttled decorator can only be applied to methods');
   });
 });

@@ -1,3 +1,3 @@
 export * from './debounce';
-export * from './throttled';
+export * from './throttle';
 export * from './memorize';
