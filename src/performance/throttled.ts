@@ -33,6 +33,10 @@ export function throttled<T extends (...args: any[]) => any>(
       propertyKey: string | symbol,
       descriptor: PropertyDescriptor
     ) {
+      if (!descriptor || typeof descriptor.value !== 'function') {
+        throw new Error('throttled decorator can only be applied to methods');
+      }
+      
       const originalMethod = descriptor.value;
       descriptor.value = createThrottledFunction(originalMethod, actualDelay);
       return descriptor;

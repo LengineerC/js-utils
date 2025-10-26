@@ -1,4 +1,4 @@
-const { memorize } = require('../../src');
+const { memorize, memorized } = require('../../src');
 
 describe('memorize 缓存函数', () => {
   test('应该缓存基本类型参数的结果', () => {
@@ -528,5 +528,440 @@ describe('memorize 边界情况测试', () => {
     expect(result1).toBe(0);
     expect(result2).toBe(0);
     expect(mockFn).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('memorized 装饰器', () => {
+  test('应该缓存类方法的执行结果', () => {
+    class Calculator {
+      private callCount = 0;
+
+      @memorized
+      expensiveCalculation(n: number): number {
+        this.callCount++;
+        // 模拟昂贵的计算
+        return n * n * n;
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const calc = new Calculator();
+
+    // 第一次调用
+    const result1 = calc.expensiveCalculation(5);
+    expect(result1).toBe(125);
+    expect(calc.getCallCount()).toBe(1);
+
+    // 第二次调用相同参数，应该从缓存返回
+    const result2 = calc.expensiveCalculation(5);
+    expect(result2).toBe(125);
+    expect(calc.getCallCount()).toBe(1); // 调用次数没有增加
+
+    // 不同参数应该重新计算
+    const result3 = calc.expensiveCalculation(3);
+    expect(result3).toBe(27);
+    expect(calc.getCallCount()).toBe(2);
+  });
+
+  test('应该正确处理字符串参数', () => {
+    class StringProcessor {
+      private callCount = 0;
+
+      @memorized
+      processString(str: string): string {
+        this.callCount++;
+        return str.toUpperCase();
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const processor = new StringProcessor();
+
+    const result1 = processor.processString('hello');
+    expect(result1).toBe('HELLO');
+    expect(processor.getCallCount()).toBe(1);
+
+    const result2 = processor.processString('hello');
+    expect(result2).toBe('HELLO');
+    expect(processor.getCallCount()).toBe(1);
+  });
+
+  test('应该正确处理多个参数', () => {
+    class MathOperations {
+      private callCount = 0;
+
+      @memorized
+      add(a: number, b: number): number {
+        this.callCount++;
+        return a + b;
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const math = new MathOperations();
+
+    const result1 = math.add(2, 3);
+    expect(result1).toBe(5);
+    expect(math.getCallCount()).toBe(1);
+
+    const result2 = math.add(2, 3);
+    expect(result2).toBe(5);
+    expect(math.getCallCount()).toBe(1);
+
+    const result3 = math.add(4, 5);
+    expect(result3).toBe(9);
+    expect(math.getCallCount()).toBe(2);
+  });
+
+  test('应该正确处理对象参数', () => {
+    class ObjectProcessor {
+      private callCount = 0;
+
+      @memorized
+      processObject(obj: { value: number }): number {
+        this.callCount++;
+        return obj.value * 2;
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const processor = new ObjectProcessor();
+    const obj = { value: 10 };
+
+    const result1 = processor.processObject(obj);
+    expect(result1).toBe(20);
+    expect(processor.getCallCount()).toBe(1);
+
+    const result2 = processor.processObject(obj);
+    expect(result2).toBe(20);
+    expect(processor.getCallCount()).toBe(1);
+
+    // 不同引用的相同内容对象应该分别缓存
+    const obj2 = { value: 10 };
+    const result3 = processor.processObject(obj2);
+    expect(result3).toBe(20);
+    expect(processor.getCallCount()).toBe(2);
+  });
+
+  test('应该正确处理异步方法', async () => {
+    class AsyncService {
+      private callCount = 0;
+
+      @memorized
+      async fetchData(id: number): Promise<string> {
+        this.callCount++;
+        await new Promise(resolve => setTimeout(resolve, 10));
+        return `data-${id}`;
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const service = new AsyncService();
+
+    const result1 = await service.fetchData(1);
+    expect(result1).toBe('data-1');
+    expect(service.getCallCount()).toBe(1);
+
+    const result2 = await service.fetchData(1);
+    expect(result2).toBe('data-1');
+    expect(service.getCallCount()).toBe(1);
+  });
+
+  test('应该正确处理返回对象的方法', () => {
+    class DataService {
+      private callCount = 0;
+
+      @memorized
+      getData(id: number): { id: number; name: string } {
+        this.callCount++;
+        return { id, name: `Item ${id}` };
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const service = new DataService();
+
+    const result1 = service.getData(1);
+    expect(result1).toEqual({ id: 1, name: 'Item 1' });
+    expect(service.getCallCount()).toBe(1);
+
+    const result2 = service.getData(1);
+    expect(result2).toEqual({ id: 1, name: 'Item 1' });
+    expect(result2).toBe(result1); // 应该返回相同的引用
+    expect(service.getCallCount()).toBe(1);
+  });
+
+  test('应该正确处理 this 上下文', () => {
+    class ContextTest {
+      private value = 42;
+
+      @memorized
+      getValue(): number {
+        return this.value;
+      }
+
+      @memorized
+      multiply(factor: number): number {
+        return this.value * factor;
+      }
+    }
+
+    const instance = new ContextTest();
+
+    const result1 = instance.getValue();
+    expect(result1).toBe(42);
+
+    const result2 = instance.multiply(2);
+    expect(result2).toBe(84);
+
+    // 第二次调用应该从缓存返回
+    const result3 = instance.getValue();
+    expect(result3).toBe(42);
+
+    const result4 = instance.multiply(2);
+    expect(result4).toBe(84);
+  });
+
+  test('应该正确处理错误情况', () => {
+    class ErrorService {
+      private callCount = 0;
+
+      @memorized
+      mightThrow(shouldThrow: boolean): string {
+        this.callCount++;
+        if (shouldThrow) {
+          throw new Error('Test error');
+        }
+        return 'success';
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const service = new ErrorService();
+
+    // 第一次调用应该抛出错误
+    expect(() => service.mightThrow(true)).toThrow('Test error');
+    expect(service.getCallCount()).toBe(1);
+
+    // 第二次调用相同参数应该再次抛出错误（错误不会被缓存）
+    expect(() => service.mightThrow(true)).toThrow('Test error');
+    expect(service.getCallCount()).toBe(2);
+
+    // 不同参数应该正常工作
+    const result = service.mightThrow(false);
+    expect(result).toBe('success');
+    expect(service.getCallCount()).toBe(3);
+  });
+
+  test('应该正确处理 Symbol 属性名', () => {
+    const SYMBOL_METHOD = Symbol('method');
+
+    class SymbolTest {
+      private callCount = 0;
+
+      @memorized
+      [SYMBOL_METHOD](value: number): number {
+        this.callCount++;
+        return value * 2;
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const instance = new SymbolTest();
+
+    const result1 = instance[SYMBOL_METHOD](5);
+    expect(result1).toBe(10);
+    expect(instance.getCallCount()).toBe(1);
+
+    const result2 = instance[SYMBOL_METHOD](5);
+    expect(result2).toBe(10);
+    expect(instance.getCallCount()).toBe(1);
+  });
+
+  test('应该正确处理继承', () => {
+    class BaseClass {
+      protected callCount = 0;
+
+      @memorized
+      baseMethod(value: number): number {
+        this.callCount++;
+        return value * 2;
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    class DerivedClass extends BaseClass {
+      @memorized
+      derivedMethod(value: number): number {
+        this.callCount++;
+        return value * 3;
+      }
+    }
+
+    const instance = new DerivedClass();
+
+    // 测试基类方法
+    const result1 = instance.baseMethod(5);
+    expect(result1).toBe(10);
+    expect(instance.getCallCount()).toBe(1);
+
+    const result2 = instance.baseMethod(5);
+    expect(result2).toBe(10);
+    expect(instance.getCallCount()).toBe(1);
+
+    // 测试派生类方法
+    const result3 = instance.derivedMethod(4);
+    expect(result3).toBe(12);
+    expect(instance.getCallCount()).toBe(2);
+
+    const result4 = instance.derivedMethod(4);
+    expect(result4).toBe(12);
+    expect(instance.getCallCount()).toBe(2);
+  });
+
+  test('应该正确处理静态方法', () => {
+    class StaticTest {
+      private static callCount = 0;
+
+      @memorized
+      static staticMethod(value: number): number {
+        StaticTest.callCount++;
+        return value * 2;
+      }
+
+      static getCallCount(): number {
+        return StaticTest.callCount;
+      }
+    }
+
+    const result1 = StaticTest.staticMethod(5);
+    expect(result1).toBe(10);
+    expect(StaticTest.getCallCount()).toBe(1);
+
+    const result2 = StaticTest.staticMethod(5);
+    expect(result2).toBe(10);
+    expect(StaticTest.getCallCount()).toBe(1);
+  });
+
+  test('应该正确处理复杂参数类型', () => {
+    class ComplexService {
+      private callCount = 0;
+
+      @memorized
+      processComplex(
+        arr: number[],
+        obj: { key: string },
+        fn: (x: number) => number
+      ): any {
+        this.callCount++;
+        return {
+          arraySum: arr.reduce((sum, n) => sum + n, 0),
+          objectKey: obj.key,
+          functionResult: fn(5)
+        };
+      }
+
+      getCallCount(): number {
+        return this.callCount;
+      }
+    }
+
+    const service = new ComplexService();
+    const arr = [1, 2, 3];
+    const obj = { key: 'test' };
+    const fn = (x: number) => x * 2;
+
+    const result1 = service.processComplex(arr, obj, fn);
+    expect(result1).toEqual({
+      arraySum: 6,
+      objectKey: 'test',
+      functionResult: 10
+    });
+    expect(service.getCallCount()).toBe(1);
+
+    const result2 = service.processComplex(arr, obj, fn);
+    expect(result2).toEqual(result1);
+    expect(service.getCallCount()).toBe(1);
+  });
+
+  test('应该正确处理装饰器错误情况', () => {
+    // 装饰器应该抛出错误
+    expect(() => {
+      class InvalidTest {
+        // 尝试装饰非方法属性
+        @memorized
+        notAMethod: string = 'not a method';
+      }
+    }).toThrow('memorized decorator can only be applied to methods');
+  });
+
+  test('应该正确处理多个装饰器方法', () => {
+    class MultiMethodTest {
+      private callCount1 = 0;
+      private callCount2 = 0;
+
+      @memorized
+      method1(value: number): number {
+        this.callCount1++;
+        return value * 2;
+      }
+
+      @memorized
+      method2(value: string): string {
+        this.callCount2++;
+        return value.toUpperCase();
+      }
+
+      getCallCounts(): { count1: number; count2: number } {
+        return { count1: this.callCount1, count2: this.callCount2 };
+      }
+    }
+
+    const instance = new MultiMethodTest();
+
+    // 测试第一个方法
+    const result1 = instance.method1(5);
+    expect(result1).toBe(10);
+    expect(instance.getCallCounts()).toEqual({ count1: 1, count2: 0 });
+
+    const result2 = instance.method1(5);
+    expect(result2).toBe(10);
+    expect(instance.getCallCounts()).toEqual({ count1: 1, count2: 0 });
+
+    // 测试第二个方法
+    const result3 = instance.method2('hello');
+    expect(result3).toBe('HELLO');
+    expect(instance.getCallCounts()).toEqual({ count1: 1, count2: 1 });
+
+    const result4 = instance.method2('hello');
+    expect(result4).toBe('HELLO');
+    expect(instance.getCallCounts()).toEqual({ count1: 1, count2: 1 });
   });
 });

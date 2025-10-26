@@ -40,6 +40,10 @@ export function debounce<T extends (...args: any[]) => any>(
       propertyKey: string | symbol,
       descriptor: PropertyDescriptor
     ) {
+      if (!descriptor || typeof descriptor.value !== 'function') {
+        throw new Error('debounce decorator can only be applied to methods');
+      }
+      
       const originalMethod = descriptor.value;
       descriptor.value = createDebouncedFunction(originalMethod, delay, imm);
       return descriptor;

@@ -1,3 +1,8 @@
+/**
+ * 缓存函数
+ * @param fn 需要被缓存的函数
+ * @returns 缓存后的函数
+ */
 export function memorize<T extends (...args: any[]) => any>(fn: T): T {
   const cacheRoot = new Map<any, any>();
   const __value__ = Symbol("__value__");
@@ -38,4 +43,20 @@ export function memorize<T extends (...args: any[]) => any>(fn: T): T {
     setCacheNode(args, result);
     return result;
   } as T;
+}
+
+/**
+ * 函数缓存装饰器（通过@装饰器语法调用）
+ */
+export function memorized(
+  target: any,
+  propertyKey: string | symbol,
+  descriptor: PropertyDescriptor
+): void {
+  if (!descriptor || typeof descriptor.value !== 'function') {
+    throw new Error('memorized decorator can only be applied to methods');
+  }
+  
+  const originalMethod = descriptor.value;
+  descriptor.value = memorize(originalMethod);
 }
