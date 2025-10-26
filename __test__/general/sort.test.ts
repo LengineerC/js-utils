@@ -130,7 +130,6 @@ describe('compareVersion', () => {
 
       const sorted = versions.sort(compareVersion);
       
-      // 所有版本都相等，应该保持原顺序（但具体取决于排序算法的稳定性）
       expect(sorted).toHaveLength(4);
       expect(sorted.every(v => compareVersion(v, '1.0.0') === 0)).toBe(true);
     });
