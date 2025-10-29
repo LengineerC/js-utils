@@ -1,35 +1,18 @@
 # debounce
 
-防抖函数，延迟执行函数直到停止调用后的指定时间。
+## 函数 - debounce
 
-## 函数
+防抖函数
 
-### debounce
+### 参数
 
-防抖函数实现。
+- `fn`: `(...args: any[]) => any` - 需要防抖的函数
 
-#### 语法
+- `delay`: `number` - 延迟时间（ms），默认300ms
 
-```typescript
-debounce<T extends (...args: any[]) => any>(
-  fn: T,
-  delay: number = 300,
-  immediate: boolean = false
-): (...args: Parameters<T>) => void
-```
+- `immediate`: `boolean` - 是否立即执行
 
-#### 参数
-
-- `fn` - 需要防抖的函数
-- `delay` - 延迟时间（毫秒），默认 300ms
-- `immediate` - 是否立即执行，默认 false
-
-#### 返回值
-
-返回防抖后的函数。
-
-#### 示例
-
+### 示例
 ```typescript
 import { debounce } from '@lengineerc/utils';
 
@@ -53,22 +36,17 @@ save({ id: 2 }); // 不会执行，等待 500ms
 // 500ms 后可以再次立即执行
 ```
 
-### debounced
+## 函数 - debounced
 
-防抖装饰器，用于类方法。
+防抖函数装饰器（用于方法，通过@装饰器语法调用）
 
-#### 语法
+### 参数
 
-```typescript
-debounced(delay: number = 300, immediate: boolean = false): MethodDecorator
-```
+- `delay`: `number` - 延迟时间（ms），默认300ms
 
-#### 参数
+- `immediate`: `boolean` - 是否立即执行
 
-- `delay` - 延迟时间（毫秒），默认 300ms
-- `immediate` - 是否立即执行，默认 false
-
-#### 示例
+### 示例
 
 ```typescript
 import { debounced } from '@lengineerc/utils';
@@ -89,11 +67,3 @@ const search = new SearchComponent();
 search.onSearch('test'); // 300ms 后执行
 search.onSave({ id: 1 }); // 立即执行
 ```
-
-## 特性
-
-- 支持立即执行模式
-- 保持 `this` 上下文
-- 类型安全
-- 支持装饰器语法
-- 可配置延迟时间

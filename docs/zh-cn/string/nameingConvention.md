@@ -1,30 +1,20 @@
 # nameingConvention
 
-命名约定转换工具，支持驼峰命名和下划线命名之间的转换。
+## 函数 - camelToSnake
 
-## 函数
+字符串或对象键名小驼峰转下划线
 
-### camelToSnake
+### 参数
 
-将驼峰命名转换为下划线命名。
+- `obj`: `any` - 对象
 
-#### 语法
+- `isString`: `boolean` - 是否处理单个字符串（默认false）
 
-```typescript
-camelToSnake(obj: any, isString: boolean = false): any
-```
+### 返回值
 
-#### 参数
+`any`-转换后的对象
 
-- `obj` - 需要转换的对象或字符串
-- `isString` - 是否处理单个字符串，默认 false
-
-#### 返回值
-
-返回转换后的对象或字符串。
-
-#### 示例
-
+### 示例
 ```typescript
 import { camelToSnake } from '@lengineerc/utils';
 
@@ -77,27 +67,21 @@ console.log(convertedArr);
 //   { first_name: 'Jane', last_name: 'Smith' }
 // ]
 ```
+## 函数 - snakeToCamel
 
-### snakeToCamel
+字符串或对象键名下划线转小驼峰
 
-将下划线命名转换为驼峰命名。
+### 参数
 
-#### 语法
+- `obj`: `any` - 对象
 
-```typescript
-snakeToCamel(obj: any, isString: boolean = false): any
-```
+- `isString`: `boolean` - 是否处理单个字符串（默认false）
 
-#### 参数
+### 返回值
 
-- `obj` - 需要转换的对象或字符串
-- `isString` - 是否处理单个字符串，默认 false
+`any`-转换后的对象
 
-#### 返回值
-
-返回转换后的对象或字符串。
-
-#### 示例
+### 示例
 
 ```typescript
 import { snakeToCamel } from '@lengineerc/utils';
@@ -167,12 +151,3 @@ console.log(convertedArr);
 - `user_name` → `userName`
 - `get_user_info` → `getUserInfo`
 - `http_response` → `httpResponse`
-
-## 特性
-
-- 支持嵌套对象转换
-- 支持数组转换
-- 支持字符串单独转换
-- 保持非对象值不变
-- 递归处理所有层级
-- 处理各种边界情况

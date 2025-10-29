@@ -1,7 +1,7 @@
 /**
  * 节流函数
- * @param fn 需要节流的函数
- * @param delay 延迟时间（ms），默认300ms
+ * @param {(...args: any[]) => any} fn 需要节流的函数
+ * @param {number} delay 延迟时间（ms），默认300ms
  */
 export function throttle<T extends (...args: any[]) => any>(
   fn: T,
@@ -34,7 +34,7 @@ export function throttle<T extends (...args: any[]) => any>(
 
 /**
  * 节流装饰器（用于方法，通过@装饰器语法调用）
- * @param delay 延迟时间（ms），默认300ms
+ * @param {number} delay 延迟时间（ms），默认300ms
  */
 export function throttled(delay: number = 300): MethodDecorator {
   return function (

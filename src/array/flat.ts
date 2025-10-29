@@ -1,8 +1,8 @@
 /**
  * 数组展平
- * @param arr 需要展平的数组
- * @param depth 展平深度，默认全部展平
- * @returns 展平后的数组
+ * @param {any[]} arr 需要展平的数组
+ * @param {number} depth 展平深度，默认全部展平
+ * @returns {any[]} 展平后的数组
  */
 export function flat(arr: any[], depth: number = Infinity) {
   if (arr.length === 0 || depth === 0) return arr;

@@ -1,22 +1,18 @@
 # curry
 
+## 函数 - curry
+
 柯里化函数，将多参数函数转换为可部分应用的函数。
 
-## 语法
+### 参数
 
-```typescript
-curry<F extends (...args: any[]) => any>(fn: F): Curried<F>
-```
+- `fn`: `(...args: any[]) => any` - 需要柯里化的函数
 
-## 参数
+### 返回值
 
-- `fn` - 需要柯里化的函数
+返回柯里化后的函数
 
-## 返回值
-
-返回柯里化后的函数，支持部分应用。
-
-## 示例
+### 示例
 
 ```typescript
 import { curry } from '@lengineerc/utils';
@@ -56,7 +52,3 @@ console.log(curriedMethod.call(obj, 1)(2)); // 13
 ## 特性
 
 - 支持任意参数数量的函数
-- 保持 `this` 上下文
-- 类型安全，支持 TypeScript 类型推断
-- 支持部分应用
-- 当参数数量达到原函数要求时自动执行

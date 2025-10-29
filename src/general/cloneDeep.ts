@@ -141,10 +141,8 @@ function baseClone(value: any, stack = new WeakMap()): any {
 }
 
 /**
- * 实现方式来源于lodash
- * 
- * 无法深拷贝函数，返回原函数引用
- * @param value 需要被深拷贝的值
+ * 实现方式来源于lodash, 无法深拷贝函数，返回原函数引用
+ * @param {any} value 需要被深拷贝的值
  * @returns 深拷贝后的值
  */
 export function cloneDeep<T>(value: T): T {

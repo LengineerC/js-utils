@@ -1,6 +1,6 @@
 /**
  * 缓存函数
- * @param fn 需要被缓存的函数
+ * @param {(...args: any[]) => any} fn 需要被缓存的函数
  * @returns 缓存后的函数
  */
 export function memorize<T extends (...args: any[]) => any>(fn: T): T {

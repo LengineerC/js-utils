@@ -14,7 +14,7 @@
 new CommandBuilder()
 ```
 
-#### 方法
+#### 成员方法
 
 ##### command
 

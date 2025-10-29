@@ -14,7 +14,7 @@ export class CommandBuilder {
 
   /**
    * 添加命令主体
-   * @param cmd 命令主体
+   * @param {string} cmd 命令主体
    * @returns 当前实例
    */
   public command(cmd: string) {
@@ -24,8 +24,8 @@ export class CommandBuilder {
 
   /**
    * 添加参数
-   * @param value 参数值
-   * @returns 当前实例
+   * @param {string | number} value 参数值
+   * @returns {CommandBuilder} 当前实例
    */
   public arg(value: string | number) {
     if (typeof value === 'string') this.parts.push(this.escape(value));
@@ -35,9 +35,9 @@ export class CommandBuilder {
 
   /**
    * 添加标志
-   * @param flag 标志
-   * @param value 标志值
-   * @returns 当前实例
+   * @param {string} flag 标志
+   * @param {string | number | boolean} value 标志值
+   * @returns {CommandBuilder} 当前实例
    */
   public flag(flag: string, value?: string | number | boolean) {
     if (value === undefined || value === true) {
@@ -50,9 +50,9 @@ export class CommandBuilder {
 
   /**
    * 添加选项
-   * @param key 选项键
-   * @param value 选项值
-   * @returns 当前实例
+   * @param {string} key 选项键
+   * @param {string | number | boolean} value 选项值
+   * @returns {CommandBuilder} 当前实例
    */
   public option(key: string, value?: string | number | boolean) {
     if (value === undefined || value === false) return this;
@@ -66,7 +66,7 @@ export class CommandBuilder {
 
   /**
    * 将命令构建为字符串
-   * @returns 构建后的命令字符串
+   * @returns {string} 构建后的命令字符串
    */
   public toString() {
     return this.parts.join(' ');
@@ -74,7 +74,7 @@ export class CommandBuilder {
 
   /**
    * 构建命令
-   * @returns 构建后的命令对象
+   * @returns {{command: string, args: string[]}} 构建后的命令对象
    */
   public build() {
     if (this.parts.length === 0) {

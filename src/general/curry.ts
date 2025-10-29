@@ -25,7 +25,7 @@ type Curried<F> = F extends (...args: infer P) => infer R
 
 /**
  * 柯里化函数，将多参数函数转换为可部分应用的函数。
- * @param fn 需要柯里化的函数
+ * @param {(...args: any[]) => any} fn 需要柯里化的函数
  * @returns 返回柯里化后的函数
  */
 export function curry<F extends (...args: any[]) => any>(fn: F): Curried<F> {

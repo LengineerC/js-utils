@@ -25,17 +25,17 @@ describe('genRandomInt', () => {
   });
 
   test('应抛出最小值非有限数字错误', () => {
-    expect(() => genRandomInt(NaN, 5)).toThrow(/最小值必须是有限数字/);
-    expect(() => genRandomInt(Infinity, 5)).toThrow(/最小值必须是有限数字/);
+    expect(() => genRandomInt(NaN, 5)).toThrow(/Minimum value must be a finite number/);
+    expect(() => genRandomInt(Infinity, 5)).toThrow(/Minimum value must be a finite number/);
   });
 
   test('应抛出最大值非有限数字错误', () => {
-    expect(() => genRandomInt(0, NaN)).toThrow(/最大值必须是有限数字/);
-    expect(() => genRandomInt(0, Infinity)).toThrow(/最大值必须是有限数字/);
+    expect(() => genRandomInt(0, NaN)).toThrow(/Maximum value must be a finite number/);
+    expect(() => genRandomInt(0, Infinity)).toThrow(/Maximum value must be a finite number/);
   });
 
   test('应抛出最小值大于最大值错误', () => {
-    expect(() => genRandomInt(5, 3)).toThrow(/最小值不能大于最大值/);
+    expect(() => genRandomInt(5, 3)).toThrow(/Minimum value cannot exceed the maximum value/);
   });
 });
 
@@ -71,17 +71,17 @@ describe('genRandomFloat', () => {
   });
 
   test('应抛出非数字或非有限数错误', () => {
-    expect(() => genRandomFloat(NaN, 1)).toThrow(/最小值必须是有限数字/);
-    expect(() => genRandomFloat(0, Infinity)).toThrow(/最大值必须是有限数字/);
+    expect(() => genRandomFloat(NaN, 1)).toThrow(/Minimum value must be a finite number/);
+    expect(() => genRandomFloat(0, Infinity)).toThrow(/Maximum value must be a finite number/);
   });
 
   test('应抛出最小值大于最大值错误', () => {
-    expect(() => genRandomFloat(5, 3)).toThrow(/最小值不能大于最大值/);
+    expect(() => genRandomFloat(5, 3)).toThrow(/Minimum value cannot exceed the maximum value/);
   });
 
   test('应抛出精度类型错误', () => {
-    expect(() => genRandomFloat(0, 1, -1)).toThrow(/精度必须是非负整数/);
-    expect(() => genRandomFloat(0, 1, 1.2)).toThrow(/精度必须是非负整数/);
+    expect(() => genRandomFloat(0, 1, -1)).toThrow(/Precision must be a non-negative integer/);
+    expect(() => genRandomFloat(0, 1, 1.2)).toThrow(/Precision must be a non-negative integer/);
   });
 });
 
@@ -118,12 +118,12 @@ describe('genRandomBoolean', () => {
   });
 
   test('应抛出概率类型错误', () => {
-    expect(() => genRandomBoolean(NaN as any)).toThrow(/概率必须是有限数字/);
-    expect(() => genRandomBoolean(Infinity)).toThrow(/概率必须是有限数字/);
+    expect(() => genRandomBoolean(NaN as any)).toThrow(/Probability must be a finite number/);
+    expect(() => genRandomBoolean(Infinity)).toThrow(/Probability must be a finite number/);
   });
 
   test('应抛出概率范围错误', () => {
-    expect(() => genRandomBoolean(-0.1)).toThrow(/概率必须在 0-1 之间/);
-    expect(() => genRandomBoolean(1.1)).toThrow(/概率必须在 0-1 之间/);
+    expect(() => genRandomBoolean(-0.1)).toThrow(/Probability must be between 0 and 1/);
+    expect(() => genRandomBoolean(1.1)).toThrow(/Probability must be between 0 and 1/);
   });
 });

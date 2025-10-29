@@ -1,29 +1,18 @@
 # memorize
 
-函数缓存工具，自动缓存函数执行结果以提高性能。
+## 函数 - memorize
 
-## 函数
+缓存函数
 
-### memorize
+### 参数
 
-缓存函数实现。
+- `fn`: `(...args: any[]) => any` - 需要被缓存的函数
 
-#### 语法
+### 返回值
 
-```typescript
-memorize<T extends (...args: any[]) => any>(fn: T): T
-```
+缓存后的函数
 
-#### 参数
-
-- `fn` - 需要被缓存的函数
-
-#### 返回值
-
-返回缓存后的函数，类型与原始函数相同。
-
-#### 示例
-
+### 示例
 ```typescript
 import { memorize } from '@lengineerc/utils';
 
@@ -62,23 +51,13 @@ const obj = { value: 10 };
 console.log(memoizedProcess(obj)); // 处理对象... 20
 console.log(memoizedProcess(obj)); // 20 (从缓存返回)
 ```
+## 函数 - memorized
 
-### memorized
+函数缓存装饰器（通过@装饰器语法调用）
 
-缓存装饰器，用于类方法。
+### 参数
 
-#### 语法
-
-```typescript
-memorized(
-  target: any,
-  propertyKey: string | symbol,
-  descriptor: PropertyDescriptor
-): void
-```
-
-#### 示例
-
+### 示例
 ```typescript
 import { memorized } from '@lengineerc/utils';
 

@@ -1,25 +1,20 @@
 # sort
 
-版本号比较函数，支持语义化版本号和预发布版本。
+## 函数 - compareVersion
 
-## 语法
+版本号比较，可直接用于两个版本好相比，也可以通过Array.prototype.sort调用，使版本号从小到大排序，支持1.0.0和包含使用-连接的预发布版本标签1.0.0-alpha
 
-```typescript
-compareVersion(a: string, b: string): number
-```
+### 参数
 
-## 参数
+- `a`: `string` - 版本a
 
-- `a` - 版本号 a
-- `b` - 版本号 b
+- `b`: `string` - 版本b
 
-## 返回值
+### 返回值
 
-- `0` - 版本号相等
-- `1` - 版本号 a 大于 b
-- `-1` - 版本号 a 小于 b
+`number` - 0相等，1: a>b，-1: b<a
 
-## 示例
+### 示例
 
 ```typescript
 import { compareVersion } from '@lengineerc/utils';
@@ -56,10 +51,3 @@ console.log(versions); // ['1.0.0-alpha', '1.0.0-beta', '1.0.0', '1.0.1', '2.0.0
 2. 缺失的版本号部分视为 0
 3. 正式版本大于预发布版本
 4. 预发布版本按字母顺序比较
-
-## 特性
-
-- 支持语义化版本规范
-- 支持预发布版本标签
-- 可用于 `Array.prototype.sort` 方法
-- 处理不同长度的版本号

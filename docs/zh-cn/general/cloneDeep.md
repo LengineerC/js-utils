@@ -1,22 +1,18 @@
 # cloneDeep
 
-深拷贝函数，支持各种数据类型和循环引用。
+## 函数 - cloneDeep
 
-## 语法
+实现方式来源于lodash, 无法深拷贝函数，返回原函数引用
 
-```typescript
-cloneDeep<T>(value: T): T
-```
+### 参数
 
-## 参数
+- `value`: `any` - 需要被深拷贝的值
 
-- `value` - 需要被深拷贝的值
+### 返回值
 
-## 返回值
+深拷贝后的值
 
-返回深拷贝后的值，类型与输入值相同。
-
-## 示例
+### 示例
 
 ```typescript
 import { cloneDeep } from '@lengineerc/utils';
@@ -67,7 +63,3 @@ console.log(clonedRegex instanceof RegExp); // true
 ## 特性
 
 - 基于 lodash 实现
-- 支持循环引用检测
-- 保持原型链
-- 处理各种边界情况
-- 类型安全

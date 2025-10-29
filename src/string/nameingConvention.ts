@@ -1,8 +1,8 @@
 /**
  * 字符串或对象键名小驼峰转下划线
- * @param obj 对象
- * @param isString 是否处理单个字符串（默认false）
- * @returns 转换后的对象
+ * @param {any} obj 对象
+ * @param {boolean} isString 是否处理单个字符串（默认false）
+ * @returns {any} 转换后的对象
  */
 export function camelToSnake(obj: any, isString: boolean = false): any {
   if (isString) {
@@ -38,9 +38,9 @@ export function camelToSnake(obj: any, isString: boolean = false): any {
 
 /**
  * 字符串或对象键名下划线转小驼峰
- * @param obj 对象
- * @param isString 是否处理单个字符串（默认false）
- * @returns 转换后的对象
+ * @param {any} obj 对象
+ * @param {boolean} isString 是否处理单个字符串（默认false）
+ * @returns {any} 转换后的对象
  */
 export function snakeToCamel(obj: any, isString: boolean = false): any {
   if (isString) {
