@@ -220,9 +220,10 @@ function genDocs(tree: Resource[]) {
               md += `${item.description.replace(/(\r\n)+/g, '\n')}\n\n`;
             }
             else if (item.kind === 'method') {
-              md += `## 成员方法 - ${item.name}\n\n`;
+              let title = item.name === 'constructor' ? "构造器" : `成员方法 - ${item.name}`;
+              md += `### ${title}\n\n`;
               md += `${item.description}\n\n`;
-              md += `### 参数\n\n`;
+              md += `#### 参数\n\n`;
             }
             else if (item.kind === 'function') {
               md += `## 函数 - ${item.name}\n\n`;
@@ -239,7 +240,7 @@ function genDocs(tree: Resource[]) {
 
             const returns = item.tags.filter(tag => tag.tag === 'returns');
             if (returns.length > 0) {
-              md += `### 返回值\n\n`;
+              md += `###${item.kind === 'method' ? '#' : ''} 返回值\n\n`;
               returns.forEach(item => {
                 const { name = '', type } = item;
                 md += `${type ? `\`${type}\` - ` : ''}${name}\n\n`;
@@ -278,9 +279,10 @@ function genDocs(tree: Resource[]) {
                 appendixMd += `${item.description.replace(/(\r\n)+/g, '\n')}\n\n`;
               }
               else if (item.kind === 'method') {
-                appendixMd += `## 成员方法 - ${item.name}\n\n`;
+                let title = item.name === 'constructor' ? "构造器" : `成员方法 - ${item.name}`;
+                appendixMd += `### ${title}\n\n`;
                 appendixMd += `${item.description}\n\n`;
-                appendixMd += `### 参数\n\n`;
+                appendixMd += `#### 参数\n\n`;
               }
               else if (item.kind === 'function') {
                 appendixMd += `\n\n## 函数 - ${item.name}\n\n`;
@@ -297,7 +299,7 @@ function genDocs(tree: Resource[]) {
 
               const returns = item.tags.filter(tag => tag.tag === 'returns');
               if (returns.length > 0) {
-                appendixMd += `### 返回值\n\n`;
+                appendixMd += `###${item.kind === 'method' ? '#' : ''} 返回值\n\n`;
                 returns.forEach(item => {
                   const { name = '', type } = item;
                   appendixMd += `${type ? `\`${type}\` - ` : ''}${name}\n\n`;
