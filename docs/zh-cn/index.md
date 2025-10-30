@@ -8,3 +8,5 @@
 [性能工具](performance/index.md)
 
 [字符串工具](string/index.md)
+
+[对象工具](object/index.md)
