@@ -9,6 +9,7 @@
   "scripts": {
     "build": "tsc && webpack --config ./webpack.config.js",
     "gen:docs": "npm run build && tsx scripts/gen-docs.ts",
+    "new": "tsx scripts/new.ts",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
