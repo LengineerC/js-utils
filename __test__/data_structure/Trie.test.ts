@@ -43,7 +43,18 @@ describe('Trie 字典树', () => {
     trie.insert('batch');
 
     const words = trie.getWordsWithPrefix('app');
-    expect(words.sort()).toEqual(['app', 'apple', 'apply']);
+    expect(words.sort()).toEqual([{
+      "frequency": 1,
+      "word": "app",
+    },
+    {
+      "frequency": 1,
+      "word": "apple",
+    },
+    {
+      "frequency": 1,
+      "word": "apply",
+    },]);
   });
 
   test('删除单词后能正确更新词频', () => {
@@ -96,7 +107,16 @@ describe('Trie 字典树', () => {
     expect(trie.search('您好')).toBe(true);
     expect(trie.search('你')).toBe(false);
     expect(trie.startsWith('你')).toBe(true);
-    expect(trie.getWordsWithPrefix('你').sort()).toEqual(['你好', '你好吗']);
+    expect(trie.getWordsWithPrefix('你').sort()).toEqual([
+      {
+        "frequency": 1,
+        "word": "你好",
+      },
+      {
+        "frequency": 1,
+        "word": "你好吗",
+      },
+    ]);
   });
 
   test('多语言支持 - 日文', () => {
@@ -106,7 +126,16 @@ describe('Trie 字典树', () => {
 
     expect(trie.search('こんにちは')).toBe(true);
     expect(trie.startsWith('こん')).toBe(true);
-    expect(trie.getWordsWithPrefix('こ')).toEqual(['こんにちは', 'こんばんは']);
+    expect(trie.getWordsWithPrefix('こ')).toEqual([
+      {
+        "frequency": 1,
+        "word": "こんにちは",
+      },
+      {
+        "frequency": 1,
+        "word": "こんばんは",
+      },
+    ]);
   });
 
   test('多语言支持 - emoji', () => {
@@ -122,7 +151,7 @@ describe('Trie 字典树', () => {
     expect(trie.startsWith('😀')).toBe(true);
 
     const prefixResults = trie.getWordsWithPrefix('😀');
-    expect(prefixResults.sort()).toEqual(['😀', '😀😃']);
+    expect(prefixResults.sort()).toEqual([{ word: '😀', frequency: 1 }, { "word": '😀😃', frequency: 1 }]);
   });
 
   test('边界情况', () => {
@@ -137,7 +166,7 @@ describe('Trie 字典树', () => {
     // 重复插入
     trie.insert('repeat');
     trie.insert('repeat');
-    
+
     expect(trie.getFrequency('repeat')).toBe(2);
     expect(trie.search('repeat')).toBe(true);
 
@@ -163,8 +192,34 @@ describe('Trie 字典树', () => {
     ];
     words.forEach(w => trie.insert(w));
 
-    expect(trie.getWordsWithPrefix('abc').sort()).toEqual(['abc', 'abcd', 'abcde', 'abce']);
-    expect(trie.getWordsWithPrefix('xyz').sort()).toEqual(['xyz', 'xyzz']);
+    expect(trie.getWordsWithPrefix('abc').sort()).toEqual([
+      {
+        "frequency": 1,
+        "word": "abc",
+      },
+      {
+        "frequency": 1,
+        "word": "abcd",
+      },
+      {
+        "frequency": 1,
+        "word": "abcde",
+      },
+      {
+        "frequency": 1,
+        "word": "abce",
+      },
+    ]);
+    expect(trie.getWordsWithPrefix('xyz').sort()).toEqual([
+      {
+        "frequency": 1,
+        "word": "xyz",
+      },
+      {
+        "frequency": 1,
+        "word": "xyzz",
+      }
+    ]);
     expect(trie.getWordsWithPrefix('nope')).toEqual([]);
   });
 });

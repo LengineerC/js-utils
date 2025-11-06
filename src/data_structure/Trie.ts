@@ -1,3 +1,9 @@
+interface WordFrequency {
+  word: string;
+  frequency: number;
+}
+
+
 class TrieNode {
   public children: Map<string, TrieNode>;
   public isEnd: boolean;
@@ -47,7 +53,7 @@ export class Trie {
     }
 
     node.isEnd = true;
-    node.frequency += 1; // Increment frequency each time the word is inserted
+    node.frequency += 1;
   }
 
   /**
@@ -82,16 +88,16 @@ export class Trie {
   /**
    * 获取指定前缀的所有单词
    * @param {string} prefix 前缀
-   * @returns {string[]} 单词数组
+   * @returns {Array<WordFrequency>} 单词和词频的数组
    */
-  public getWordsWithPrefix(prefix: string): string[] {
-    const results: string[] = [];
+  public getWordsWithPrefix(prefix: string): WordFrequency[] {
+    const results: { word: string, frequency: number }[] = [];
     const node = this.findNode(prefix);
 
     if (!node) return results;
 
     const dfs = (curNode: TrieNode, path: string) => {
-      if (curNode.isEnd) results.push(path);
+      if (curNode.isEnd) results.push({ word: path, frequency: curNode.frequency });
 
       for (const [ch, next] of curNode.children) {
         dfs(next, path + ch);
