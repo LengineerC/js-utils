@@ -1,10 +1,12 @@
 class TrieNode {
   public children: Map<string, TrieNode>;
   public isEnd: boolean;
+  public frequency: number;
 
   public constructor() {
     this.children = new Map();
     this.isEnd = false;
+    this.frequency = 0;
   }
 }
 
@@ -31,7 +33,7 @@ export class Trie {
   }
 
   /**
-   * 插入一个单词
+   * 插入一个单词并更新词频
    * @param {string} word 需要插入的单词
    */
   public insert(word: string) {
@@ -41,11 +43,11 @@ export class Trie {
       if (!node.children.has(char)) {
         node.children.set(char, new TrieNode());
       }
-
       node = node.children.get(char)!;
     }
 
     node.isEnd = true;
+    node.frequency += 1; // Increment frequency each time the word is inserted
   }
 
   /**
@@ -55,8 +57,17 @@ export class Trie {
    */
   public search(word: string): boolean {
     const node = this.findNode(word);
-
     return !!node && node.isEnd;
+  }
+
+  /**
+   * 获取指定单词的频率
+   * @param {string} word 需要查询频率的单词
+   * @returns {number} 单词的频率
+   */
+  public getFrequency(word: string): number {
+    const node = this.findNode(word);
+    return node && node.isEnd ? node.frequency : 0;
   }
 
   /**
@@ -92,7 +103,7 @@ export class Trie {
   }
 
   /**
-   * 删除一个单词
+   * 删除一个单词（词频-1）
    * @param {string} word 需要删除的单词
    * @returns {boolean} 是否删除成功
    */
@@ -107,16 +118,24 @@ export class Trie {
     }
 
     if (!node.isEnd) return false;
-    node.isEnd = false;
+
+    node.frequency -= 1;
+    if (node.frequency === 0) {
+      node.isEnd = false;
+    }
 
     for (let i = stack.length - 1; i >= 0; i--) {
       const [parent, char] = stack[i];
       const child = parent.children.get(char)!;
+
       if (child.children.size === 0 && !child.isEnd) {
         parent.children.delete(char);
-      } else break;
+      } else {
+        break;
+      }
     }
 
     return true;
   }
+
 }

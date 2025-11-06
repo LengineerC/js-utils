@@ -44,7 +44,6 @@ export class RadixTree {
   }
 
   private insertHelper(str: string, node: RadixTreeNode, count: number): void {
-    // 如果当前没有子节点，则直接作为新的子节点
     if (node.children.size === 0) {
       const newNode = new RadixTreeNode(str, true, count);
       node.children.add(newNode);
@@ -54,7 +53,6 @@ export class RadixTree {
     let isMatch = false;
     for (const current of node.children) {
       let i = 0;
-      // 计算公共前缀长度
       for (; i < str.length && i < current.word.length; i++) {
         if (str[i] !== current.word[i]) {
           break;
@@ -69,39 +67,29 @@ export class RadixTree {
           current.isEnd = true;
           current.frequency += count;
         }
-        // 
-        // *** 修正点: 节点分裂逻辑 ***
-        // 
         // 情况二：需要分裂节点
         else if (i !== current.word.length) {
-          // 1. 保存当前节点（如 "apple"）的原始状态
           const oldIsEnd = current.isEnd;
           const oldFrequency = current.frequency;
           const oldChildren = new Set(current.children);
 
-          // 2. 创建新子节点，包含 "apple" 的剩余部分 ("e")
           const newNode = new RadixTreeNode(
-            current.word.substring(i), // "e"
-            oldIsEnd,                 // "apple" 的 isEnd
-            oldFrequency             // "apple" 的 frequency
+            current.word.substring(i),
+            oldIsEnd,
+            oldFrequency
           );
           newNode.children = oldChildren;
 
-          // 3. 更新当前节点为分裂点 ("appl")
           current.word = current.word.substring(0, i);
           current.children.clear();
           current.children.add(newNode);
 
-          // 4. 根据新插入的 str ("appl" 或 "apply") 更新 "appl" 节点的状态
           if (i === str.length) {
-            // 插入的是 "appl"，"appl" 节点是单词结尾
             current.isEnd = true;
-            current.frequency = count; // "appl" 的词频是 count
+            current.frequency = count;
           } else {
-            // 插入的是 "apply"，"appl" 只是一个路径节点
             current.isEnd = false;
             current.frequency = 0;
-            // 5. 创建 "apply" 的剩余部分 ("y")
             const newNode2 = new RadixTreeNode(str.substring(i), true, count);
             current.children.add(newNode2);
           }
