@@ -2,7 +2,7 @@
 
 ## 类 - RadixTree
 
-压缩字典树（Radix Tree / Patricia Trie）
+基数树（Radix Tree）
 
 支持多语言（中文、日文、emoji 等）、词频统计、节点合并与删除操作。
 
