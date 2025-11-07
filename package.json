@@ -21,7 +21,8 @@
   "lint-staged": {
     "src/**/*.{ts, js}": [
       "eslint --fix",
-      "prettier --write"
+      "prettier --write",
+      "jest --coverage"
     ]
   },
   "keywords": [
