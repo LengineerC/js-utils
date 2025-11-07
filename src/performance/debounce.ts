@@ -7,7 +7,7 @@
 export function debounce<T extends (...args: any[]) => any>(
   fn: T,
   delay: number = 300,
-  immediate: boolean = false
+  immediate: boolean = false,
 ): (...args: Parameters<T>) => void {
   let timer: ReturnType<typeof setTimeout> | null = null;
   let isImmediateCalled = false;
@@ -37,11 +37,7 @@ export function debounce<T extends (...args: any[]) => any>(
  * @param {boolean} immediate 是否立即执行
  */
 export function debounced(delay: number = 300, immediate: boolean = false): MethodDecorator {
-  return function (
-    target: any,
-    propertyKey: string | symbol,
-    descriptor: PropertyDescriptor
-  ) {
+  return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
     if (!descriptor || typeof descriptor.value !== 'function') {
       throw new Error('debounced decorator can only be applied to methods');
     }

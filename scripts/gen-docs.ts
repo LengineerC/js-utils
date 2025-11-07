@@ -220,9 +220,10 @@ function genDocs(tree: Resource[]) {
               md += `${item.description.replace(/(\r\n)+/g, '\n')}\n\n`;
             }
             else if (item.kind === 'method') {
-              md += `## 成员方法 - ${item.name}\n\n`;
+              let title = item.name === 'constructor' ? "构造器" : `成员方法 - ${item.name}`;
+              md += `### ${title}\n\n`;
               md += `${item.description}\n\n`;
-              md += `### 参数\n\n`;
+              md += `#### 参数\n\n`;
             }
             else if (item.kind === 'function') {
               md += `## 函数 - ${item.name}\n\n`;
@@ -234,15 +235,15 @@ function genDocs(tree: Resource[]) {
               .filter(tag => tag.tag === 'param')
               .forEach(param => {
                 const { name, type, description = '' } = param;
-                md += `- \`${name}\`${type?`: \`${type}\``:''} - ${description}\n\n`;
+                md += `- \`${name}\`${type ? `: \`${type}\`` : ''} - ${description}\n\n`;
               });
 
             const returns = item.tags.filter(tag => tag.tag === 'returns');
             if (returns.length > 0) {
-              md += `### 返回值\n\n`;
+              md += `###${item.kind === 'method' ? '#' : ''} 返回值\n\n`;
               returns.forEach(item => {
                 const { name = '', type } = item;
-                md += `${type?`\`${type}\` - `:''}${name}\n\n`;
+                md += `${type ? `\`${type}\` - ` : ''}${name}\n\n`;
               });
             }
 
@@ -264,6 +265,56 @@ function genDocs(tree: Resource[]) {
     } else {
       if (node.type === RESOURCE_TYPE.Directory) {
         genDocs(node.children!);
+      } else if (node.type === RESOURCE_TYPE.File) {
+        if (!/index\.d\.ts$/.test(node.path)) {
+          const srcPath = path.resolve(distDir, node.path);
+          const content = fs.readFileSync(srcPath).toString();
+          const docs = parseDtsDocs(content);
+
+          let appendixMd = '';
+          docs.forEach(item => {
+            if (!content.includes(item.name)) {
+              if (item.kind === 'class') {
+                appendixMd += `\n\n## 类 - ${item.name}\n\n`;
+                appendixMd += `${item.description.replace(/(\r\n)+/g, '\n')}\n\n`;
+              }
+              else if (item.kind === 'method') {
+                let title = item.name === 'constructor' ? "构造器" : `成员方法 - ${item.name}`;
+                appendixMd += `### ${title}\n\n`;
+                appendixMd += `${item.description}\n\n`;
+                appendixMd += `#### 参数\n\n`;
+              }
+              else if (item.kind === 'function') {
+                appendixMd += `\n\n## 函数 - ${item.name}\n\n`;
+                appendixMd += `${item.description}\n\n`;
+                appendixMd += `### 参数\n\n`;
+              }
+
+              item.tags
+                .filter(tag => tag.tag === 'param')
+                .forEach(param => {
+                  const { name, type, description = '' } = param;
+                  appendixMd += `- \`${name}\`${type ? `: \`${type}\`` : ''} - ${description}\n\n`;
+                });
+
+              const returns = item.tags.filter(tag => tag.tag === 'returns');
+              if (returns.length > 0) {
+                appendixMd += `###${item.kind === 'method' ? '#' : ''} 返回值\n\n`;
+                returns.forEach(item => {
+                  const { name = '', type } = item;
+                  appendixMd += `${type ? `\`${type}\` - ` : ''}${name}\n\n`;
+                });
+              }
+
+              if (item.kind === 'function') appendixMd += `### 示例\n\n`;
+            }
+          });
+
+          if (appendixMd.length > 0) {
+            fs.appendFileSync(mapPath, appendixMd);
+            console.log(`Appended file: ${mapPath}`);
+          }
+        }
       }
     }
 

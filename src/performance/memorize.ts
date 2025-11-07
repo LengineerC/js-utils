@@ -5,7 +5,7 @@
  */
 export function memorize<T extends (...args: any[]) => any>(fn: T): T {
   const cacheRoot = new Map<any, any>();
-  const __value__ = Symbol("__value__");
+  const __value__ = Symbol('__value__');
 
   function getCacheNode(args: any[]): { has: boolean; value: any } | undefined {
     let current = cacheRoot;
@@ -51,12 +51,12 @@ export function memorize<T extends (...args: any[]) => any>(fn: T): T {
 export function memorized(
   target: any,
   propertyKey: string | symbol,
-  descriptor: PropertyDescriptor
+  descriptor: PropertyDescriptor,
 ): void {
   if (!descriptor || typeof descriptor.value !== 'function') {
     throw new Error('memorized decorator can only be applied to methods');
   }
-  
+
   const originalMethod = descriptor.value;
   descriptor.value = memorize(originalMethod);
 }

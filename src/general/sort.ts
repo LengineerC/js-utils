@@ -17,7 +17,7 @@ export function compareVersion(a: string, b: string): number {
   for (let i = 0; i < Math.max(v1.parts.length, v2.parts.length); i++) {
     const num1 = v1.parts[i] || 0;
     const num2 = v2.parts[i] || 0;
-    
+
     if (num1 > num2) return 1;
     if (num1 < num2) return -1;
   }

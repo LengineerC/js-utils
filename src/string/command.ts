@@ -6,7 +6,7 @@ export class CommandBuilder {
 
   private escape(value: string) {
     if (/[\s"'\\]/.test(value)) {
-      const escaped = value.replace(/(["\\])/g, "\\$1");
+      const escaped = value.replace(/(["\\])/g, '\\$1');
       return `"${escaped}"`;
     }
     return value;
@@ -88,4 +88,4 @@ export class CommandBuilder {
       args: args.filter(a => a !== ''),
     };
   }
-};
+}

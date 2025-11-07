@@ -3,8 +3,12 @@
 
 [通用工具](general/index.md)
 
-[数字工具](number/index.md)
+[数学工具](math/index.md)
 
 [性能工具](performance/index.md)
 
 [字符串工具](string/index.md)
+
+[对象工具](object/index.md)
+
+[数据结构](data_structure/index.md)

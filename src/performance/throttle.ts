@@ -5,7 +5,7 @@
  */
 export function throttle<T extends (...args: any[]) => any>(
   fn: T,
-  delay: number = 300
+  delay: number = 300,
 ): (...args: Parameters<T>) => void {
   let lastTime = 0;
   let timer: any = null;
@@ -37,11 +37,7 @@ export function throttle<T extends (...args: any[]) => any>(
  * @param {number} delay 延迟时间（ms），默认300ms
  */
 export function throttled(delay: number = 300): MethodDecorator {
-  return function (
-    target: any,
-    propertyKey: string | symbol,
-    descriptor: PropertyDescriptor
-  ) {
+  return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
     if (!descriptor || typeof descriptor.value !== 'function') {
       throw new Error('throttled decorator can only be applied to methods');
     }
