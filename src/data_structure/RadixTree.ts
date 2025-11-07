@@ -30,7 +30,7 @@ export class RadixTree {
 
   /**
    * 向字典树中插入一个单词及其词频。
-   * 
+   *
    * @param {string} str 要插入的字符串，可以为空字符串。
    * @param {number} [count=1] 该单词的词频增量（默认为 1）。
    */
@@ -73,11 +73,7 @@ export class RadixTree {
           const oldFrequency = current.frequency;
           const oldChildren = new Set(current.children);
 
-          const newNode = new RadixTreeNode(
-            current.word.substring(i),
-            oldIsEnd,
-            oldFrequency
-          );
+          const newNode = new RadixTreeNode(current.word.substring(i), oldIsEnd, oldFrequency);
           newNode.children = oldChildren;
 
           current.word = current.word.substring(0, i);
@@ -114,11 +110,11 @@ export class RadixTree {
 
   /**
    * 删除单词的部分词频或整个单词。
-   * 
+   *
    * - 如果 `count` 小于词频，则仅减少频率。
    * - 如果 `count` 等于词频，则彻底删除该单词。
    * - 若单词不存在或频率不足，则返回 false。
-   * 
+   *
    * @param {string} str 要删除的单词。
    * @param {number} [count=1] 要删除的次数。
    * @returns {boolean} 是否成功删除。
@@ -139,10 +135,10 @@ export class RadixTree {
 
   /**
    * 删除指定单词的所有词频。
-   * 
+   *
    * - 如果该单词存在，将完全删除。
    * - 如果不存在或只是路径节点（非单词），返回 false。
-   * 
+   *
    * @param {string} str 要彻底删除的单词。
    * @returns {boolean} 是否成功删除。
    */
@@ -272,10 +268,10 @@ export class RadixTree {
 
   /**
    * 获取某个单词的词频。
-   * 
+   *
    * - 如果单词存在，返回其累计词频。
    * - 如果不存在或仅为路径节点，返回 0。
-   * 
+   *
    * @param {string} str 要查询的单词。
    * @returns {number} 该单词的词频（可能为 0）。
    */
@@ -316,7 +312,7 @@ export class RadixTree {
 
   /**
    * 判断是否存在指定前缀开头的单词。
-   * 
+   *
    * @param {string} prefix 前缀字符串。
    * @returns {boolean} 若存在以该前缀开头的单词，则返回 true。
    */
@@ -357,10 +353,10 @@ export class RadixTree {
 
   /**
    * 获取以指定前缀开头的所有单词及其词频。
-   * 
+   *
    * - 如果前缀为空字符串，则返回所有单词。
    * - 若前缀不存在，则返回空数组。
-   * 
+   *
    * @param {string} prefix 前缀字符串，可为空。
    * @returns {{word: string, frequency: number}[]} 匹配的单词及频率数组。
    */
@@ -373,11 +369,16 @@ export class RadixTree {
       return result;
     }
 
-    this.getWordsWithPrefixHelper(prefix, this.root, "", result);
+    this.getWordsWithPrefixHelper(prefix, this.root, '', result);
     return result;
   }
 
-  private getWordsWithPrefixHelper(prefix: string, node: RadixTreeNode, accumulatedPrefix: string, result: WordFrequency[]): void {
+  private getWordsWithPrefixHelper(
+    prefix: string,
+    node: RadixTreeNode,
+    accumulatedPrefix: string,
+    result: WordFrequency[],
+  ): void {
     for (const current of node.children) {
       let i = 0;
       // 计算公共前缀长度
@@ -399,7 +400,7 @@ export class RadixTree {
             prefix.substring(i),
             current,
             accumulatedPrefix + current.word,
-            result
+            result,
           );
           return;
         }
@@ -417,7 +418,7 @@ export class RadixTree {
     if (node.isEnd) {
       result.push({
         word: fullWord,
-        frequency: node.frequency
+        frequency: node.frequency,
       });
     }
 

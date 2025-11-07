@@ -3,7 +3,6 @@ interface WordFrequency {
   frequency: number;
 }
 
-
 class TrieNode {
   public children: Map<string, TrieNode>;
   public isEnd: boolean;
@@ -91,7 +90,7 @@ export class Trie {
    * @returns {Array<WordFrequency>} 单词和词频的数组
    */
   public getWordsWithPrefix(prefix: string): WordFrequency[] {
-    const results: { word: string, frequency: number }[] = [];
+    const results: { word: string; frequency: number }[] = [];
     const node = this.findNode(prefix);
 
     if (!node) return results;
@@ -143,5 +142,4 @@ export class Trie {
 
     return true;
   }
-
 }
