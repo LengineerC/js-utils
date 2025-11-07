@@ -1,2 +1,2 @@
-## 数字工具
+## 数学工具
 [random](random.md)

@@ -3,7 +3,7 @@
 
 [通用工具](general/index.md)
 
-[数字工具](number/index.md)
+[数学工具](math/index.md)
 
 [性能工具](performance/index.md)
 
