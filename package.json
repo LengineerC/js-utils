@@ -11,7 +11,18 @@
     "gen:docs": "npm run build && tsx scripts/gen-docs.ts",
     "new": "tsx scripts/new.ts",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "eslint . --ext .ts,.tsx --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,json,md}\"",
+    "prepare": "husky",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.{ts, js}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
   },
   "keywords": [
     "utils"
@@ -19,12 +30,24 @@
   "author": "LengineerC",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@types/jest": "^30.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.3",
+    "@typescript-eslint/parser": "^8.46.3",
+    "eslint": "^9.39.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "husky": "^9.1.7",
     "jest": "^30.2.0",
+    "lint-staged": "^16.2.6",
+    "prettier": "^3.6.2",
     "ts-jest": "^29.4.5",
     "ts-loader": "^9.5.4",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.46.3",
     "webpack": "^5.102.1",
     "webpack-cli": "^6.0.1"
   }

@@ -25,10 +25,11 @@ function initCloneByTag(value: any, tag: string): any {
   switch (tag) {
     case '[object Date]':
       return new Date(value.getTime());
-    case '[object RegExp]':
+    case '[object RegExp]': {
       const regex = new RegExp(value.source, value.flags);
       regex.lastIndex = value.lastIndex;
       return regex;
+    }
     case '[object Map]':
       return new Map();
     case '[object Set]':
@@ -49,10 +50,11 @@ function initCloneByTag(value: any, tag: string): any {
     case '[object Float32Array]':
     case '[object Float64Array]':
       return new (value.constructor as any)(value);
-    case '[object Error]':
+    case '[object Error]': {
       const err = new (value as any).constructor(value.message);
       if ('stack' in value) err.stack = value.stack;
       return err;
+    }
     case '[object Symbol]':
       // return Object(Symbol.prototype.valueOf.call(value));
       return Symbol(value.description);

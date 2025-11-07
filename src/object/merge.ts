@@ -4,10 +4,7 @@ function isPlainObject(obj: any): obj is Record<string, any> {
 
 function isMergeable(value: any): boolean {
   return (
-    value &&
-    typeof value === 'object' &&
-    !(value instanceof Date) &&
-    !(value instanceof RegExp)
+    value && typeof value === 'object' && !(value instanceof Date) && !(value instanceof RegExp)
   );
 }
 
@@ -67,9 +64,9 @@ export function merge<T extends object>(target: T, source: any): T {
     const tgtVal = (target as any)[key];
 
     if (isMergeable(tgtVal) && isMergeable(srcVal)) {
-      result[(key as any)] = merge(tgtVal, srcVal);
+      result[key as any] = merge(tgtVal, srcVal);
     } else {
-      result[(key as any)] = cloneValue(srcVal);
+      result[key as any] = cloneValue(srcVal);
     }
   }
 
