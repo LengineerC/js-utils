@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "experimentalDecorators": true,
-    "module": "esnext",
+    "module": "nodenext",
     "moduleResolution": "nodenext",
     "rootDir": "./src",
     "declaration": true,
