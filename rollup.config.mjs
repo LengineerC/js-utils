@@ -1,4 +1,4 @@
-import typescript from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import terser from '@rollup/plugin-terser';
@@ -12,8 +12,15 @@ export default {
     commonjs(),
     typescript({
       tsconfig: './tsconfig.json',
-      declaration: true,
-      declarationDir: 'dist/types'
+      tsconfigOverride: {
+        compilerOptions: {
+          declaration: true,
+          declarationDir: 'dist/types',
+          importHelpers: false,
+          module: 'ESNext',
+          moduleResolution: 'Node',
+        }
+      }
     }),
     terser(),
     cleanup(),
