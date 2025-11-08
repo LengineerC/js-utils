@@ -1,6 +1,8 @@
 import typescript from '@rollup/plugin-typescript';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import terser from '@rollup/plugin-terser';
+import cleanup from 'rollup-plugin-cleanup';
 
 export default {
   input: 'src/index.ts',
@@ -12,7 +14,9 @@ export default {
       tsconfig: './tsconfig.json',
       declaration: true,
       declarationDir: 'dist/types'
-    })
+    }),
+    terser(),
+    cleanup(),
   ],
   output: [
     {
@@ -31,5 +35,6 @@ export default {
       name: 'LCUtils',
       sourcemap: true
     }
-  ]
+  ],
+  external: []
 };
