@@ -1,4 +1,4 @@
-const { throttle, throttled } = require('../../src');
+const { throttle, Throttle } = require('../../src');
 
 describe('throttle 节流函数', () => {
   beforeEach(() => {
@@ -93,7 +93,7 @@ describe('throttle 节流函数', () => {
   });
 });
 
-describe('throttled 节流装饰器', () => {
+describe('Throttle 节流装饰器', () => {
   beforeEach(() => {
     jest.useFakeTimers();
   });
@@ -103,11 +103,11 @@ describe('throttled 节流装饰器', () => {
     jest.useRealTimers();
   });
 
-  test('装饰器 @throttled 应该正确节流方法', () => {
+  test('装饰器 @Throttle 应该正确节流方法', () => {
     const mockFn = jest.fn();
 
     class Test {
-      @throttled(100)
+      @Throttle(100)
       method() {
         mockFn();
       }
@@ -133,12 +133,12 @@ describe('throttled 节流装饰器', () => {
     expect(mockFn).toHaveBeenCalledTimes(3);
   });
 
-  test('装饰器 @throttled 应该正确绑定 this', () => {
+  test('装饰器 @Throttle 应该正确绑定 this', () => {
     let receivedThis: any = null;
 
     class Test {
       value = 42;
-      @throttled(100)
+      @Throttle(100)
       method() {
         receivedThis = this;
       }
@@ -150,12 +150,12 @@ describe('throttled 节流装饰器', () => {
     expect(receivedThis).toBe(instance);
   });
 
-  test('装饰器 @throttled 应该正确处理非函数调用', () => {
+  test('装饰器 @Throttle 应该正确处理非函数调用', () => {
     expect(() => {
       class Test {
-        @throttled()
+        @Throttle()
         value = 42;
       };
-    }).toThrow('throttled decorator can only be applied to methods');
+    }).toThrow('Throttle decorator can only be applied to methods');
   });
 });

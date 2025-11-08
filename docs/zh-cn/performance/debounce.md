@@ -36,7 +36,7 @@ save({ id: 2 }); // 不会执行，等待 500ms
 // 500ms 后可以再次立即执行
 ```
 
-## 函数 - debounced
+## 函数 - Debounce
 
 防抖函数装饰器（用于方法，通过@装饰器语法调用）
 
@@ -49,15 +49,15 @@ save({ id: 2 }); // 不会执行，等待 500ms
 ### 示例
 
 ```typescript
-import { debounced } from '@lengineerc/utils';
+import { Debounce } from '@lengineerc/utils';
 
 class SearchComponent {
-  @debounced(300)
+  @Debounce(300)
   onSearch(query: string) {
     console.log('搜索:', query);
   }
 
-  @debounced(500, true)
+  @Debounce(500, true)
   onSave(data: any) {
     console.log('保存:', data);
   }

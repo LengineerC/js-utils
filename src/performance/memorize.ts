@@ -48,13 +48,13 @@ export function memorize<T extends (...args: any[]) => any>(fn: T): T {
 /**
  * 函数缓存装饰器（通过@装饰器语法调用）
  */
-export function memorized(
+export function Memorize(
   target: any,
   propertyKey: string | symbol,
   descriptor: PropertyDescriptor,
 ): void {
   if (!descriptor || typeof descriptor.value !== 'function') {
-    throw new Error('memorized decorator can only be applied to methods');
+    throw new Error('Memorize decorator can only be applied to methods');
   }
 
   const originalMethod = descriptor.value;
