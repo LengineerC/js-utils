@@ -3,7 +3,7 @@ import process from 'process';
 import fs from 'fs';
 
 const docsDir = path.resolve(process.cwd(), 'docs', 'zh-cn');
-const distDir = path.resolve(process.cwd(), 'dist');
+const distDir = path.resolve(process.cwd(), 'dist/types');
 
 export interface JSDocTag {
   tag: string;
