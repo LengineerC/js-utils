@@ -11,4 +11,4 @@
 
 [isEqual](./isEqual.md)
 
-[handlePromise](./handlePromise.md)
+[promiseLimit](./promiseLimit.md)
