@@ -36,10 +36,10 @@ export function throttle<T extends (...args: any[]) => any>(
  * 节流装饰器（用于方法，通过@装饰器语法调用）
  * @param {number} delay 延迟时间（ms），默认300ms
  */
-export function throttled(delay: number = 300): MethodDecorator {
+export function Throttle(delay: number = 300): MethodDecorator {
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
     if (!descriptor || typeof descriptor.value !== 'function') {
-      throw new Error('throttled decorator can only be applied to methods');
+      throw new Error('Throttle decorator can only be applied to methods');
     }
 
     const originalMethod = descriptor.value;

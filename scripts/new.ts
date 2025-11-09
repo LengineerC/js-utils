@@ -142,7 +142,7 @@ async function main() {
 
       const testFileCreated = await safeWriteFile(
         testFilePath, 
-        `import { ${filename} } from '../../src;`,
+        `import { ${filename} } from '../../src';`,
         `${filename}.test.ts`
       );
 

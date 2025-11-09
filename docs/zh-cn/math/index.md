@@ -1,2 +1,4 @@
 ## 数学工具
-[random](random.md)
+[random](./random.md)
+
+[Matrix](./Matrix.md)

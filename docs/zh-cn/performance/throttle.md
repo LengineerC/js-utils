@@ -40,7 +40,7 @@ document.getElementById('input')?.addEventListener('input', (e) => {
 });
 ```
 
-## 函数 - throttled
+## 函数 - Throttle
 
 节流装饰器（用于方法，通过@装饰器语法调用）
 
@@ -50,15 +50,15 @@ document.getElementById('input')?.addEventListener('input', (e) => {
 
 ### 示例
 ```typescript
-import { throttled } from '@lengineerc/utils';
+import { Throttle } from '@lengineerc/utils';
 
 class ScrollComponent {
-  @throttled(100)
+  @Throttle(100)
   onScroll(event: Event) {
     console.log('滚动处理:', event);
   }
 
-  @throttled(1000)
+  @Throttle(1000)
   onButtonClick() {
     console.log('按钮点击处理');
   }

@@ -4,3 +4,9 @@
 [curry](curry.md)
 
 [sort](sort.md)
+
+[range](./range.md)
+
+[sleep](./sleep.md)
+
+[isEqual](./isEqual.md)

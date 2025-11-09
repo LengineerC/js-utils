@@ -2,13 +2,16 @@
   "name": "@lengineerc/utils",
   "version": "1.0.0",
   "description": "Some useful functions.",
-  "main": "dist/index.js",
+  "main": "./bundle.cjs.js",
+  "module": "./bundle.esm.js",
+  "browser": "./bundle.umd.js",
+  "types": "./types/index.d.ts",
   "repository": {
     "url": "https://github.com/LengineerC/js-utils"
   },
   "scripts": {
-    "build": "tsc && webpack --config ./webpack.config.js",
-    "gen:docs": "npm run build && tsx scripts/gen-docs.ts",
+    "build": "rollup -c",
+    "gen:docs": "tsc && tsx scripts/gen-docs.ts",
     "new": "tsx scripts/new.ts",
     "test": "jest",
     "test:coverage": "jest --coverage",
@@ -32,7 +35,11 @@
   "devDependencies": {
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
+    "@rollup/plugin-commonjs": "^29.0.0",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^0.4.4",
     "@types/jest": "^30.0.0",
+    "@types/node": "^24.10.0",
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
     "eslint": "^9.39.1",
@@ -43,12 +50,13 @@
     "jest": "^30.2.0",
     "lint-staged": "^16.2.6",
     "prettier": "^3.6.2",
+    "rollup": "^4.53.1",
+    "rollup-plugin-cleanup": "^3.2.1",
+    "rollup-plugin-typescript2": "^0.36.0",
     "ts-jest": "^29.4.5",
-    "ts-loader": "^9.5.4",
+    "tslib": "^2.8.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.46.3",
-    "webpack": "^5.102.1",
-    "webpack-cli": "^6.0.1"
+    "typescript-eslint": "^8.46.3"
   }
 }

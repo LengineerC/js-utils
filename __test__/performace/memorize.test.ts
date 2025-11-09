@@ -1,4 +1,4 @@
-const { memorize, memorized } = require('../../src');
+const { memorize, Memorize } = require('../../src');
 
 describe('memorize 缓存函数', () => {
   test('应该缓存基本类型参数的结果', () => {
@@ -531,12 +531,12 @@ describe('memorize 边界情况测试', () => {
   });
 });
 
-describe('memorized 装饰器', () => {
+describe('Memorize 装饰器', () => {
   test('应该缓存类方法的执行结果', () => {
     class Calculator {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       expensiveCalculation(n: number): number {
         this.callCount++;
         // 模拟昂贵的计算
@@ -570,7 +570,7 @@ describe('memorized 装饰器', () => {
     class StringProcessor {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       processString(str: string): string {
         this.callCount++;
         return str.toUpperCase();
@@ -596,7 +596,7 @@ describe('memorized 装饰器', () => {
     class MathOperations {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       add(a: number, b: number): number {
         this.callCount++;
         return a + b;
@@ -626,7 +626,7 @@ describe('memorized 装饰器', () => {
     class ObjectProcessor {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       processObject(obj: { value: number }): number {
         this.callCount++;
         return obj.value * 2;
@@ -659,7 +659,7 @@ describe('memorized 装饰器', () => {
     class AsyncService {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       async fetchData(id: number): Promise<string> {
         this.callCount++;
         await new Promise(resolve => setTimeout(resolve, 10));
@@ -686,7 +686,7 @@ describe('memorized 装饰器', () => {
     class DataService {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       getData(id: number): { id: number; name: string } {
         this.callCount++;
         return { id, name: `Item ${id}` };
@@ -713,12 +713,12 @@ describe('memorized 装饰器', () => {
     class ContextTest {
       private value = 42;
 
-      @memorized
+      @Memorize
       getValue(): number {
         return this.value;
       }
 
-      @memorized
+      @Memorize
       multiply(factor: number): number {
         return this.value * factor;
       }
@@ -744,7 +744,7 @@ describe('memorized 装饰器', () => {
     class ErrorService {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       mightThrow(shouldThrow: boolean): string {
         this.callCount++;
         if (shouldThrow) {
@@ -780,7 +780,7 @@ describe('memorized 装饰器', () => {
     class SymbolTest {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       [SYMBOL_METHOD](value: number): number {
         this.callCount++;
         return value * 2;
@@ -806,7 +806,7 @@ describe('memorized 装饰器', () => {
     class BaseClass {
       protected callCount = 0;
 
-      @memorized
+      @Memorize
       baseMethod(value: number): number {
         this.callCount++;
         return value * 2;
@@ -818,7 +818,7 @@ describe('memorized 装饰器', () => {
     }
 
     class DerivedClass extends BaseClass {
-      @memorized
+      @Memorize
       derivedMethod(value: number): number {
         this.callCount++;
         return value * 3;
@@ -850,7 +850,7 @@ describe('memorized 装饰器', () => {
     class StaticTest {
       private static callCount = 0;
 
-      @memorized
+      @Memorize
       static staticMethod(value: number): number {
         StaticTest.callCount++;
         return value * 2;
@@ -874,7 +874,7 @@ describe('memorized 装饰器', () => {
     class ComplexService {
       private callCount = 0;
 
-      @memorized
+      @Memorize
       processComplex(
         arr: number[],
         obj: { key: string },
@@ -916,10 +916,10 @@ describe('memorized 装饰器', () => {
     expect(() => {
       class InvalidTest {
         // 尝试装饰非方法属性
-        @memorized
+        @Memorize
         notAMethod: string = 'not a method';
       }
-    }).toThrow('memorized decorator can only be applied to methods');
+    }).toThrow('Memorize decorator can only be applied to methods');
   });
 
   test('应该正确处理多个装饰器方法', () => {
@@ -927,13 +927,13 @@ describe('memorized 装饰器', () => {
       private callCount1 = 0;
       private callCount2 = 0;
 
-      @memorized
+      @Memorize
       method1(value: number): number {
         this.callCount1++;
         return value * 2;
       }
 
-      @memorized
+      @Memorize
       method2(value: string): string {
         this.callCount2++;
         return value.toUpperCase();

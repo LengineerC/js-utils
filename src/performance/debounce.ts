@@ -36,10 +36,10 @@ export function debounce<T extends (...args: any[]) => any>(
  * @param {number} delay 延迟时间（ms），默认300ms
  * @param {boolean} immediate 是否立即执行
  */
-export function debounced(delay: number = 300, immediate: boolean = false): MethodDecorator {
+export function Debounce(delay: number = 300, immediate: boolean = false): MethodDecorator {
   return function (target: any, propertyKey: string | symbol, descriptor: PropertyDescriptor) {
     if (!descriptor || typeof descriptor.value !== 'function') {
-      throw new Error('debounced decorator can only be applied to methods');
+      throw new Error('Debounce decorator can only be applied to methods');
     }
 
     const originalMethod = descriptor.value;

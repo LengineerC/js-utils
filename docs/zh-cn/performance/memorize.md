@@ -51,7 +51,7 @@ const obj = { value: 10 };
 console.log(memoizedProcess(obj)); // 处理对象... 20
 console.log(memoizedProcess(obj)); // 20 (从缓存返回)
 ```
-## 函数 - memorized
+## 函数 - Memorize
 
 函数缓存装饰器（通过@装饰器语法调用）
 
@@ -59,12 +59,12 @@ console.log(memoizedProcess(obj)); // 20 (从缓存返回)
 
 ### 示例
 ```typescript
-import { memorized } from '@lengineerc/utils';
+import { Memorize } from '@lengineerc/utils';
 
 class Calculator {
   private callCount = 0;
 
-  @memorized
+  @Memorize
   expensiveCalculation(n: number): number {
     this.callCount++;
     console.log(`计算 ${n}，调用次数: ${this.callCount}`);
