@@ -10,3 +10,5 @@
 [sleep](./sleep.md)
 
 [isEqual](./isEqual.md)
+
+[handlePromise](./handlePromise.md)
