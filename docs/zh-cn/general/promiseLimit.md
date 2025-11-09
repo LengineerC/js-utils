@@ -1,4 +1,3 @@
-````markdown
 # promiseLimit
 
 ## 函数 - promiseLimit
@@ -65,5 +64,3 @@ run();
 - `limit` 应为正整数；当 `limit` 大于或等于任务数量时，所有任务会尽可能同时启动。
 - 若任务内部抛出同步异常，该异常会被内部通过 Promise 捕获并作为 `{ status: 'rejected', error }` 返回。
 - 该函数适合需要限制并发请求（网络请求、IO 等）并获取每个任务执行结果的场景。
-
-````
