@@ -1,7 +1,7 @@
 ````markdown
-# handleRequest
+# handlePromise
 
-## 函数 - handleRequest
+## 函数 - handlePromise
 
 并发控制的 Promise 任务执行器。接受一组返回 Promise 的任务函数并按照给定的并发上限执行，最终返回每个任务的执行结果（不抛出异常，而是以状态描述的形式返回每个任务的结果）。
 
@@ -20,7 +20,7 @@
 ### 示例
 
 ```typescript
-import { handleRequest } from '@lengineerc/utils';
+import { handlePromise } from '@lengineerc/utils';
 
 // 辅助：创建一个异步任务生成器（用于示例）
 function createTask(time: number, shouldReject = false, value?: any) {
@@ -41,7 +41,7 @@ async function run() {
   ];
 
   // 并发执行，最多同时两个任务运行
-  const results = await handleRequest(tasks, 2);
+  const results = await handlePromise(tasks, 2);
 
   console.log(results);
   // 可能输出：
