@@ -1,6 +1,6 @@
 type Task = () => Promise<any>;
 
-export function handleRequest(
+export function handlePromise(
   tasks: Task[],
   limit: number,
 ): Promise<Array<{ status: 'fulfilled'; value: any } | { status: 'rejected'; error: any }>> {
