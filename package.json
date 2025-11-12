@@ -1,11 +1,11 @@
 {
   "name": "@lengineerc/utils",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Some useful functions, tools, and others.",
-  "main": "./bundle.cjs.js",
-  "module": "./bundle.esm.js",
-  "browser": "./bundle.umd.js",
-  "types": "./types/index.d.ts",
+  "main": "./dist/bundle.cjs.js",
+  "module": "./dist/bundle.esm.js",
+  "browser": "./dist/bundle.umd.js",
+  "types": "./dist/index.d.ts",
   "repository": {
     "url": "https://github.com/LengineerC/js-utils"
   },
