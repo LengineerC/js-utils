@@ -1,7 +1,7 @@
 {
   "name": "@lengineerc/utils",
-  "version": "1.0.0",
-  "description": "Some useful functions.",
+  "version": "1.0.1",
+  "description": "Some useful functions, tools, and others.",
   "main": "./bundle.cjs.js",
   "module": "./bundle.esm.js",
   "browser": "./bundle.umd.js",

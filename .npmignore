@@ -9,6 +9,7 @@ rollup.config.mjs
 jest.config.js
 eslint.config.mjs
 commitlint.config.js
+.husky/
 
 # Development dependencies
 node_modules/
