@@ -5,3 +5,5 @@
 [Trie](./Trie.md)
 
 [RadixTree](./RadixTree.md)
+
+[Graph](./Graph.md)
