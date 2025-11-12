@@ -6,6 +6,10 @@
 ### 📄 使用文档
 [简体中文](docs/zh-cn/index.md) | [English](docs/en/index.md)
 
+### ⬇️ Installation
+```bash
+npm install @lengineerc/utils
+```
 
 ### 🏭 自动化脚本
  - `gen:docs`: 自动解析导出的对象的`jsdoc`并生成文档（功能不完全，最好不要在非导出对象上写`jsdoc`）
