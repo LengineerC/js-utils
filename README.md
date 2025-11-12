@@ -1,16 +1,17 @@
 ## 🛠️ js-utils
-包含一些常用工具函数，工具类，数据结构等，省去了新建项目时重复编写函数的麻烦
+A collection of common utility functions, utility classes, and data structures, saving you the trouble of rewriting functions when starting new projects.
 
-**node，浏览器（umd）通用**
+**Works in both Node.js and browsers**
 
-### 📄 使用文档
+### 📄 Documentation
 [简体中文](docs/zh-cn/index.md) | [English](docs/en/index.md)
 
 
-### 🏭 自动化脚本
- - `gen:docs`: 自动解析导出的对象的`jsdoc`并生成文档（功能不完全，最好不要在非导出对象上写`jsdoc`）
- - `new`: 快速创建新组件所需要的文件和修改对应导出文件
+### 🏭 Automation Scripts
+ - `gen:docs`: Automatically parse JSDoc comments from exported objects and generate documentation (feature is incomplete, it's best not to write JSDoc on non-exported objects)
+ - `new`: Quickly create files needed for new components and modify corresponding export files
 
 ---
 
-持续开发中...
+Under continuous development...
+
