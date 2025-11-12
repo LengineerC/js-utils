@@ -9,6 +9,9 @@
   "repository": {
     "url": "https://github.com/LengineerC/js-utils"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "rollup -c",
     "gen:docs": "tsc && tsx scripts/gen-docs.ts",
