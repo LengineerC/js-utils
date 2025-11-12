@@ -1,0 +1,45 @@
+# Source files
+src/
+__test__/
+scripts/
+
+# Build configuration
+tsconfig.json
+rollup.config.mjs
+jest.config.js
+eslint.config.mjs
+commitlint.config.js
+
+# Development dependencies
+node_modules/
+yarn.lock
+package-lock.json
+
+# Test coverage
+coverage/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (optional - uncomment if you don't want to include docs)
+# docs/
+
+# Other
+*.log
+.env
+.env.local
+
+docs/

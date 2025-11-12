@@ -36,11 +36,11 @@ export default {
       format: 'cjs',
       sourcemap: true
     },
-    {
-      file: 'dist/bundle.umd.js',
-      format: 'umd',
-      name: 'LCUtils',
-      sourcemap: true
-    }
+    // {
+    //   file: 'dist/bundle.umd.js',
+    //   format: 'umd',
+    //   name: 'LCUtils',
+    //   sourcemap: true
+    // }
   ],
 };
