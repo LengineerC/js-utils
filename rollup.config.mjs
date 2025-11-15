@@ -29,12 +29,12 @@ export default {
     {
       file: 'dist/bundle.esm.js',
       format: 'es',
-      sourcemap: true
+      sourcemap: false
     },
     {
       file: 'dist/bundle.cjs.js',
       format: 'cjs',
-      sourcemap: true
+      sourcemap: false
     },
     // {
     //   file: 'dist/bundle.umd.js',
