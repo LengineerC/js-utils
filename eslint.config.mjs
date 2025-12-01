@@ -2,6 +2,7 @@ import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
 import eslintPluginPrettier from "eslint-plugin-prettier";
+import globals from 'globals';
 
 const baseConfig = {
   languageOptions: {
@@ -29,17 +30,17 @@ const baseConfig = {
   },
 };
 
-const nodeBrowserGlobals = {
-  window: "readonly",
-  document: "readonly",
-  console: "readonly",
-  process: "readonly",
-  setTimeout: "readonly",
-  clearTimeout: "readonly",
-  setInterval: "readonly",
-  clearInterval: "readonly",
-  global: "readonly",
-};
+// const nodeBrowserGlobals = {
+//   window: "readonly",
+//   document: "readonly",
+//   console: "readonly",
+//   process: "readonly",
+//   setTimeout: "readonly",
+//   clearTimeout: "readonly",
+//   setInterval: "readonly",
+//   clearInterval: "readonly",
+//   global: "readonly",
+// };
 
 // const jestGlobals = {
 //   describe: "readonly",
@@ -62,19 +63,12 @@ export default [
     ...baseConfig,
     languageOptions: {
       ...baseConfig.languageOptions,
-      globals: nodeBrowserGlobals,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
     },
   },
-
-  // {
-  //   files: ["__tests__/**/*.ts"],
-  //   ...baseConfig,
-  //   languageOptions: {
-  //     ...baseConfig.languageOptions,
-  //     globals: { ...nodeBrowserGlobals, ...jestGlobals },
-  //   },
-  // },
-
   {
     files: ["*.ts"],
     ...baseConfig,

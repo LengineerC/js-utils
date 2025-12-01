@@ -16,8 +16,6 @@
 
 ### 示例
 
-## 示例
-
 ```typescript
 import { flat } from '@lengineerc/utils';
 
