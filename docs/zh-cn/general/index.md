@@ -12,3 +12,5 @@
 [isEqual](./isEqual.md)
 
 [promiseLimit](./promiseLimit.md)
+
+[retry](./retry.md)
