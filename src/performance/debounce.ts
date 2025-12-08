@@ -1,10 +1,10 @@
 /**
  * 防抖函数
- * @param {(...args: any[]) => any} fn 需要防抖的函数
+ * @param {(...args: any[]) => void} fn 需要防抖的函数
  * @param {number} delay 延迟时间（ms），默认300ms
  * @param {boolean} immediate 是否立即执行
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: any[]) => void>(
   fn: T,
   delay: number = 300,
   immediate: boolean = false,

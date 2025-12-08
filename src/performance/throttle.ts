@@ -1,9 +1,9 @@
 /**
  * 节流函数
- * @param {(...args: any[]) => any} fn 需要节流的函数
+ * @param {(...args: any[]) => void} fn 需要节流的函数
  * @param {number} delay 延迟时间（ms），默认300ms
  */
-export function throttle<T extends (...args: any[]) => any>(
+export function throttle<T extends (...args: any[]) => void>(
   fn: T,
   delay: number = 300,
 ): (...args: Parameters<T>) => void {
