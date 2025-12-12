@@ -5,3 +5,4 @@ export * from './promiseLimit';
 export * from './isEqual';
 export * from './range';
 export * from './sleep';
+export * from './retry';

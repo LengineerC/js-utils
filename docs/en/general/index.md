@@ -13,3 +13,4 @@
 
 [promiseLimit](./promiseLimit.md)
 
+[retry](./retry.md)
