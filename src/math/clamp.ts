@@ -6,7 +6,7 @@
  * @returns {number} 返回被限制在 [min, max] 区间内的数值
  */
 export function clamp(value: number, min: number, max: number): number {
-  if (min > max) throw new Error('Man value must greatter than min value');
+  if (min > max) throw new Error('Max value must greatter than min value');
 
   if (value < min) return min;
 
