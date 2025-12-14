@@ -3,3 +3,4 @@
 
 [Matrix](./Matrix.md)
 
+[clamp](./clamp.md)
