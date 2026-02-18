@@ -7,3 +7,4 @@ export * from './range';
 export * from './sleep';
 export * from './retry';
 export * from './Option';
+export * from './Result';
