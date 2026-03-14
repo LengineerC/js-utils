@@ -125,6 +125,22 @@ andThen<U>(fn: (val: T) => Result<U, E>): Result<U, E>
 unwrapOr(defaultValue: T): T
 ```
 
+#### unwrap
+
+获取内部值，如果是 Err 则抛出错误。
+
+```typescript
+unwrap(): T
+```
+
+**返回值**
+
+返回内部值
+
+**抛出**
+
+如果值为 None 则抛出错误
+
 **参数**
 
 - `defaultValue`: `T` - 默认值

@@ -117,6 +117,22 @@ andThen<U>(fn: (val: T) => Result<U, E>): Result<U, E>
 
 Returns the chained Result
 
+#### unwrap
+
+Gets the inner value, throws error if None.
+
+```typescript
+unwrap(): T
+```
+
+**Returns**
+
+Returns the inner value
+
+**Throws**
+
+Throws an error if the value is None
+
 #### unwrapOr
 
 Gets the inner value, returns default value if Err.

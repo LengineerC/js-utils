@@ -86,6 +86,20 @@ export class Result<T, E> {
   }
 
   /**
+   * 获取内部值，如果是 None 则抛出错误
+   * @returns 内部值
+   * @throws 如果值为 None 则抛出错误
+   */
+  unwrap(): T {
+    if (this.isErr()) {
+      const errorDetail = this._value instanceof Error ? this._value.message : String(this._value);
+      throw new Error(`Result.unwrap(): ${errorDetail}`);
+    }
+
+    return this._value as T;
+  }
+
+  /**
    * 模式匹配，根据是 Ok 还是 Err 执行对应的函数
    * @param cases - 包含 Ok 和 Err 处理函数的对象
    * @returns 对应分支的返回值

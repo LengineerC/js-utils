@@ -116,6 +116,17 @@ describe('Result', () => {
     });
   });
 
+  describe('unwrap', () => {
+    test('Some 获取值', () => {
+      expect(Result.Ok(10).unwrap()).toBe(10);
+    });
+
+    test('None 抛出错误', () => {
+      expect(() => Result.Err('test error').unwrap()).toThrow();
+      expect(() => Result.Err(new Error('test error')).unwrap()).toThrow();
+    });
+  });
+
   describe('match', () => {
     test('Ok 匹配 Ok 分支', () => {
       const result = Result.Ok(42);
