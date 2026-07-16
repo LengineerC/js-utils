@@ -1,29 +1,29 @@
-# nameingConvention
+# namingConvention
 
-## 函数 - camelToSnake
+## Function - camelToSnake
 
-字符串或对象键名小驼峰转下划线
+Convert camelCase string or object key names to snake_case
 
-### 参数
+### Parameters
 
-- `obj`: `any` - 对象
+- `obj`: `any` - Object
 
-- `isString`: `boolean` - 是否处理单个字符串（默认false）
+- `isString`: `boolean` - Whether to process a single string (default false)
 
-### 返回值
+### Return Value
 
-`any`-转换后的对象
+`any` - The converted object
 
-### 示例
+### Examples
 ```typescript
 import { camelToSnake } from '@lengineerc/utils';
 
-// 字符串转换
+// String conversion
 console.log(camelToSnake('camelCase', true)); // 'camel_case'
 console.log(camelToSnake('XMLHttpRequest', true)); // 'xml_http_request'
 console.log(camelToSnake('getUserInfo', true)); // 'get_user_info'
 
-// 对象转换
+// Object conversion
 const obj = {
   userName: 'john',
   userAge: 25,
@@ -54,7 +54,7 @@ console.log(converted);
 //   hobbies: ['reading', 'swimming']
 // }
 
-// 数组转换
+// Array conversion
 const arr = [
   { firstName: 'John', lastName: 'Doe' },
   { firstName: 'Jane', lastName: 'Smith' }
@@ -67,31 +67,31 @@ console.log(convertedArr);
 //   { first_name: 'Jane', last_name: 'Smith' }
 // ]
 ```
-## 函数 - snakeToCamel
+## Function - snakeToCamel
 
-字符串或对象键名下划线转小驼峰
+Convert snake_case string or object key names to camelCase
 
-### 参数
+### Parameters
 
-- `obj`: `any` - 对象
+- `obj`: `any` - Object
 
-- `isString`: `boolean` - 是否处理单个字符串（默认false）
+- `isString`: `boolean` - Whether to process a single string (default false)
 
-### 返回值
+### Return Value
 
-`any`-转换后的对象
+`any` - The converted object
 
-### 示例
+### Examples
 
 ```typescript
 import { snakeToCamel } from '@lengineerc/utils';
 
-// 字符串转换
+// String conversion
 console.log(snakeToCamel('snake_case', true)); // 'snakeCase'
 console.log(snakeToCamel('user_name', true)); // 'userName'
 console.log(snakeToCamel('get_user_info', true)); // 'getUserInfo'
 
-// 对象转换
+// Object conversion
 const obj = {
   user_name: 'john',
   user_age: 25,
@@ -122,7 +122,7 @@ console.log(converted);
 //   hobbies: ['reading', 'swimming']
 // }
 
-// 数组转换
+// Array conversion
 const arr = [
   { first_name: 'John', last_name: 'Doe' },
   { first_name: 'Jane', last_name: 'Smith' }
@@ -136,18 +136,19 @@ console.log(convertedArr);
 // ]
 ```
 
-## 转换规则
+## Conversion Rules
 
-### 驼峰转下划线
+### CamelCase to snake_case
 
 - `camelCase` → `camel_case`
 - `XMLHttpRequest` → `xml_http_request`
 - `getUserInfo` → `get_user_info`
 - `HTTPResponse` → `http_response`
 
-### 下划线转驼峰
+### snake_case to CamelCase
 
 - `snake_case` → `snakeCase`
 - `user_name` → `userName`
 - `get_user_info` → `getUserInfo`
 - `http_response` → `httpResponse`
+
